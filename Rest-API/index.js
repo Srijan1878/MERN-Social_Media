@@ -7,6 +7,8 @@ const morgan=require('morgan')
 const userRoute=require("./routes/users.js")
 const authRoute=require("./routes/auth.js")
 const postRoute=require("./routes/posts.js")
+const conversationRoute=require("./routes/conversations.js")
+const messageRoute=require("./routes/messages.js")
 const multer= require('multer')
 
 //dotenv.config()
@@ -20,6 +22,8 @@ mongoose.set('useCreateIndex', true);
 app.use("/api/users",userRoute)
 app.use("/api/auth",authRoute)
 app.use("/api/posts",postRoute)
+app.use("/api/conversations",conversationRoute)
+app.use("/api/messages",messageRoute)
 
 app.get("/",(req,res)=>{
     res.send("So you are finally here")
