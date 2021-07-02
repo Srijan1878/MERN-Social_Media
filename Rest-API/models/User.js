@@ -39,7 +39,7 @@ const UserSchema = new mongoose.Schema({
     },
     isAdmin: {
         type: Boolean,
-        deafaut: false
+        default: false
     },
     desc: {
         type: String,

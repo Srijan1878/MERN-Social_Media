@@ -10,7 +10,7 @@ const postRoute=require("./routes/posts.js")
 const conversationRoute=require("./routes/conversations.js")
 const messageRoute=require("./routes/messages.js")
 const multer= require('multer')
-
+const path = require('path')
 //dotenv.config()
 const app=express()
 app.use(express.json())
@@ -24,13 +24,13 @@ app.use("/api/auth",authRoute)
 app.use("/api/posts",postRoute)
 app.use("/api/conversations",conversationRoute)
 app.use("/api/messages",messageRoute)
-
+app.use("/images", express.static(path.join(__dirname, "public/images")))
 app.get("/",(req,res)=>{
     res.send("So you are finally here")
 })
 const storage= multer.diskStorage({
     destination:(req,file,cb)=>{
-        cb(null, "public/images")
+        cb(null, 'public/images/')
     },
     filename:(req,file,cb)=>{
         cb(null,file.originalname)
@@ -41,7 +41,7 @@ app.post("/api/upload",upload.single('file'),(req,res)=>{
     try{
     res.status(200).json("Done")
     }catch(err){
-console.log(err)
+req.status(500).json(err)
     }
 })
 app.listen(5000,function(){

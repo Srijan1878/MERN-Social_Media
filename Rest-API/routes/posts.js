@@ -12,6 +12,15 @@ router.post("/",async (req,res)=>{
         res.status(500).json(err)
     }
 })
+//get posts
+router.get("/get",async (req,res)=>{
+    const post = await Post.find({userId:req.body.userId})
+    try{
+        res.status(200).json(post)
+    }catch(err){
+        res.status(500).json(err)
+    }
+})
 //Update a post
 router.put("/:id",async (req,res)=>{
     try{
@@ -27,21 +36,36 @@ router.put("/:id",async (req,res)=>{
         res.status(500).json(err)
     }
 })
-//delete a User
+//delete a post
 router.delete("/:id",async (req,res)=>{
     try{
         const post=await Post.findById(req.params.id)
-      if(post.userId===req.body.userId){
           await post.deleteOne()
         res.status(200).json("You have successfully deleted the post")
       }    
-      else{
-          res.status(403).json("You can only delete your post")
-      }
-    }catch(err){
+    catch(err){
         res.status(500).json(err)
     }
 })
+ //delete all posts
+ router.delete("/delete/:id", async (req, res) => {
+
+        try {
+     
+        await Post.deleteMany({userId:req.params.id},function(err){
+                if(!err){
+                    res.status(200).json("Deleted")
+                }
+                else{
+                    res.status(500).send("Error")
+                }
+            })
+            
+        } catch (err) {
+            return res.status(500).json(err)
+        }
+    })
+
 //Like a post
 router.put("/:id/like",async (req,res)=>{
     try{
@@ -114,4 +138,5 @@ router.get("/profile/:username",async (req,res)=>{
     }
     })
 
+   
 module.exports=router

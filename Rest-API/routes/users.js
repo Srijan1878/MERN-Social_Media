@@ -1,32 +1,45 @@
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
+const Post = require("../models/Post");
+const { response } = require("express");
 const saltRounds = 10
+
+//resetting userpassword
+router.put("/reset",async(req,res)=>{
+    try{
+        const hashedPassword =await bcrypt.hash(req.body.password,saltRounds)
+        const user = await User.updateOne({ email: req.body.email }, { password:hashedPassword });
+    res.status(200).json("Password has been reset")
+}catch(err){
+    res.status(500).json(err)
+}
+})
 //Update a user
 router.put("/:id", async (req, res) => {
-    if (req.body.userId === req.params.id || req.body.isAdmin) {
-        if (req.body.password) {
-            try {
-                req.body.password = await bcrypt.hash(req.body.password, saltRounds)
-            }
-            catch (err) {
-                return res.status(500).json(err)
-            }
-        }
-        try {
-            const user = await User.findByIdAndUpdate(req.params.id, {
-                $set: req.body
-            })
-            res.status(200).send("Account has been updated")
-        } catch (err) {
-            return res.status(500).json(err)
-        }
-    }
-    else {
-        return res.status(403).json("You don't have access to this")
-    }
-})
-//delete a user
+    /* if (req.body.userId === req.params.id || req.body.isAdmin) {
+         if (req.body.password) {
+             try {
+                 req.body.password = await bcrypt.hash(req.body.password, saltRounds)
+             }
+             catch (err) {
+                 return res.status(500).json(err)
+             }
+         }*/
+         try {
+             const user = await User.findByIdAndUpdate(req.params.id, {
+                 $set: req.body
+             })
+             res.status(200).send("Account has been updated")
+         } catch (err) {
+             return res.status(500).json(err)
+         }
+     }
+     /*else {
+         return res.status(403).json("You don't have access to this")
+     }*/
+ )
+//delete a user and his posts
 router.delete("/:id", async (req, res) => {
     if (req.body.userId === req.params.id || req.body.isAdmin) {
         try {
@@ -40,6 +53,7 @@ router.delete("/:id", async (req, res) => {
         return res.status(403).json("You don't have access to this")
     }
 })
+
 //get a user
 router.get("/", async (req, res) => {
     const userId=req.query.userId
@@ -128,4 +142,12 @@ if(user.followers.includes(req.body.userId)){
     }else{res.status(403).json("you can't unfollow yourself")}
         
     })
+    //logout 
+    /*router.get("/logout",async(req,res)=>{
+        try{
+       
+        }catch(err){
+        res.status(500).json(err)
+        }
+    })*/
 module.exports = router
