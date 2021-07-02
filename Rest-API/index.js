@@ -17,7 +17,8 @@ app.use(express.json())
 app.use(helmet())
 app.use(morgan("common"))
 app.use(cors())
-mongoose.connect("mongodb://localhost:27017/SocialDB",{useNewUrlParser:true,useUnifiedTopology:true})
+/*mongoose.connect("mongodb://localhost:27017/SocialDB",{useNewUrlParser:true,useUnifiedTopology:true})*/
+mongoose.connect("mongodb+srv://Srijan-admin:Srijan12345@cluster0.7giwj.mongodb.net/SocialDB",{useNewUrlParser:true,useUnifiedTopology:true})
 mongoose.set('useCreateIndex', true);
 app.use("/api/users",userRoute)
 app.use("/api/auth",authRoute)
