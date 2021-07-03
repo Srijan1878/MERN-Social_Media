@@ -1,0 +1,152 @@
+.post{
+    width:100%;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.39); 
+    box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.39);
+    margin: 30px 0;  
+} 
+.postWrapper{
+    padding: 10px;
+}
+.postTop{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.postTopRight{
+    position: relative;
+}
+.postTopLeft{
+    display: flex;
+    align-items: center;
+}
+.postProfileImg{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+p.delete { 
+    color: black;
+    display:inline-block; 
+    margin:0;
+    cursor: pointer;
+    font-weight: 400;
+ }
+p.delete:after {
+  display:block;
+  content: '';
+  border-bottom: solid 3px #5b54fa;  
+  transform: scaleX(0);  
+  transition: transform 250ms ease-in-out;
+}
+p:hover:after { transform: scaleX(1); }
+p.delete:after{  transform-origin:  0% 50%; }
+.postUsername{
+    font-style: 15px;
+    font-weight: 500;
+    margin: 0 10px; 
+}
+.postImg{
+    margin-top: 20px;
+    width: 100%;
+    max-height: 500px;
+    object-fit: contain;
+}
+.deleteDropDown{
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+}
+.postDate{
+    font-size: 12px;
+}
+.postCenter{
+    margin: 20px 0;
+}
+.postBottomLeft{
+    display: flex; 
+    align-items: center;
+}
+.like{
+    color:#1877F2;
+    width: 22px;
+    height:22px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+.postLikeCounter{
+    font-size: 15px;
+}
+.postBottom{
+    display: flex;
+    justify-content: space-between;
+}
+.postCommentText{
+    cursor: pointer;
+    border-bottom: 1px dashed gray;
+    font-size: 15px;
+}
+.love{
+    color: red;
+    cursor:pointer;
+}
+.commentInputField{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.commentInput{
+    margin-top: 10px;
+    width: 600px;
+    height: 25px;
+    border-radius: 10px;
+    outline: none;
+    border: 1px solid;
+    font-size :16px;
+    padding-left: 5px;
+}
+.showComments{
+    margin-left: 35px;
+    margin-top: 20px;
+    color: #5b54fa;
+    outline: none;
+    border: none;
+    transition: ease-in 500ms;
+    border-radius: 10px;
+    padding: 5px;
+}
+.showComments:hover{
+    background-color:#5b54fa ;
+    color: white;
+}
+.singleCommentComponent{
+    margin-top: 8px;
+    background-color: rgba(221, 208, 208, 0.897);
+    border-radius: 7px;
+}
+.commentor,.singleComment{
+    padding-left: 7px;
+    padding-top :7px;
+}
+.singleComment{
+    padding-bottom: 5px;
+}
+.commentInputField{
+    align-items: center;
+}
+.sendlogo{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    color: #5b54fa;
+    cursor: pointer;
+    margin-top: 7px;
+    size: 20px;
+    margin-left: 5px;
+}
+.sendlogo:hover{
+    filter: brightness(1.2);
+    transform: scaleX(1.11);
+}

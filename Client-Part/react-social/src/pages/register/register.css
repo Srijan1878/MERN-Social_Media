@@ -1,0 +1,83 @@
+.signup{
+    width:100vw;
+    height:100vh;
+    background-color: white;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.signupWrapper{
+    height: 70%;
+    width: 70%;
+    border-radius: 10px; 
+    -webkit-box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.39); 
+    box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.39);
+    display: flex;
+    align-items: center;
+}
+.signupLeft{
+flex:1;
+display: flex;
+justify-content: center;
+}
+.signupLogo{
+    font-size: 50px;
+    font-weight: 800;
+    color:#5B54FA;
+    margin-left: 25px;
+}
+.signIn{
+    text-align: center;
+    color: black;
+    font-weight: normal;
+}
+.redirectLoginText{
+    color: blue;
+}
+.signupDesc{
+    font-size: 24px;
+    color:#5B54FA;
+    margin-left: 25px;
+    display: flex;
+}
+.signupBox{
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    margin-left: 100px;
+}
+.signupInput{
+    margin-bottom: 28px;
+    width: 300px;
+    height: 45px;
+    border-radius: 5px;
+    border-color: #5B54FA ;
+}
+.signupInput:focus{
+    outline-style: none;
+}
+.signupButton{
+    margin-bottom: 10px;
+    width: 305px;
+    height: 60px;
+    border: none;
+    background-color: #5B54FA;
+    color: white;
+    border-radius: 5px;
+    
+}
+button{
+font-size: 15px;
+font-weight: 400;
+cursor: pointer;
+font-weight: 400;
+}
+.signupButton:hover{
+    background-color: white;
+    transition: ease-in 0.3s;
+    color:#5B54FA;
+}
+p{
+    color: black;
+}

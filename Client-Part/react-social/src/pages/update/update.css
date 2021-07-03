@@ -1,0 +1,66 @@
+input{
+    height: 30px;
+    margin-top: 5px;
+    width: 200px;
+    border-color:#5b54fa ;
+    padding: 2px;
+    margin-bottom: 12px;
+}
+input:focus{
+    outline: none;
+}
+.updateForm{
+display: flex;
+flex-direction: column;
+position: absolute;
+left: 50px;
+padding: 20px;
+border: 3px solid #5b54fa;
+width: 300px;
+background-color: white;
+opacity: 1;
+top:-250px;
+left:350px;
+z-index: 99;
+-webkit-box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.39); 
+    box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.39);
+}
+.updateTitle{
+    margin: 10px;
+    margin-left:4px;
+    display: flex;
+    color: #5b54fa;
+}
+#btn { 
+    color: #5b54fa;
+    display:inline-block; 
+    margin-top:15px;
+    width: 100px;
+    cursor: pointer;
+    font-weight: 400;
+    border: none;
+    outline: none;
+    text-transform: uppercase;
+    background-color: white;
+ }
+ .cancelLogo{
+    color:#5b54fa ;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+.cancelLogo:hover{
+transform: scale(1.1);
+}
+ .btnContainer{
+     display: flex;
+     justify-content: space-between;
+ }
+ #btn:after {
+  display:block;
+  content: '';
+  border-bottom: solid 2px #5b54fa;  
+  transform: scaleX(0);  
+  transition: transform 250ms ease-in-out;
+}
+#btn:hover:after { transform: scaleX(1); }
+#btn:after{  transform-origin:  0% 50%; }
