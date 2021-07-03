@@ -29,6 +29,7 @@ app.use("/images", express.static(path.join(__dirname, "public/images")))
 app.get("/",(req,res)=>{
     res.send("So you are finally here")
 })
+//multer implementation for image upload
 const storage= multer.diskStorage({
     destination:(req,file,cb)=>{
         cb(null, 'public/images/')
