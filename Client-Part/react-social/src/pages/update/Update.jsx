@@ -13,6 +13,7 @@ export default function Update({showUpdateModal,setShowUpdateModal}) {
         from:"",
         relationship:""
     })
+    //posting updated values on submit
     const submitHandler = async(e) =>{
         e.preventDefault()
         try{
