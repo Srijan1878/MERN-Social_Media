@@ -2,6 +2,7 @@ import "./topbar.css";
 import { Search, Person, Chat, Notifications } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import axios from "axios";
@@ -11,7 +12,7 @@ export default function Topbar() {
   const [searchValue, setSearchvalue] = useState();
   const [userDetails, setUserDetails] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
-
+  let history = useHistory();
   const fetchSearchUers = (query) => {
     setSearchvalue(query);
     fetch("/users/search", {
@@ -30,7 +31,8 @@ export default function Topbar() {
   };
   const clickHandler=()=>{
       sessionStorage.clear()
-      window.location.reload();
+      history.push('/')
+      window.location.reload()
   }
   const deleteUser=async()=>{
     try{
