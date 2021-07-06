@@ -12,12 +12,13 @@ const PF=process.env.REACT_APP_PUBLIC_FOLDER;
 const [friends,setFriends]=useState([]);
 const {user:currentUser,dispatch} = useContext(AuthContext) 
 const [isFollowed,setIsFollowed] = useState(currentUser.followings.includes(user?._id))
-
+useEffect(()=>{console.log(user?user._id:user)
+console.log(currentUser)},[])
 
 useEffect(() => {
   const getFriends = async () => {
     try {
-      const friendList = await axios.get("/users/friends/"+user._id);
+      const friendList = await axios.get("/users/friends/"+user?._id);
       setFriends(friendList.data)
 
     } catch (err) {
@@ -30,7 +31,7 @@ const handleClick = async () => {
   console.log(isFollowed)
   try {
     if (isFollowed) {
-      await axios.put(`/users/${user._id}/unfollow`, {
+      await axios.put(`/users/${user?._id}/unfollow`, {
         userId: currentUser._id,
       });
       dispatch({ type: "UNFOLLOW", payload: user._id });
@@ -76,8 +77,8 @@ const PF=process.env.REACT_APP_PUBLIC_FOLDER;
           
           <button className="rightbarFollowButton" onClick={handleClick}>
            
-            {currentUser.followings.includes(user._id)?"Unfollow":"Follow"}
-            {isFollowed?<Remove/>:<Add/>}
+            {currentUser.followings.includes(user?._id)?"Unfollow":"Follow"}
+            {currentUser.followings.includes(user?._id)?<Remove/>:<Add/>}
           </button>
       )}
       <h4 className="rightbarTitle">User Information</h4>

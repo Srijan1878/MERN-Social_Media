@@ -120,7 +120,17 @@ if(!user.followers.includes(req.body.userId)){
     }else{res.status(403).json("you can't follow yourself")}
         
     })
-
+     //updating profilePicture
+     router.put("/profilePicture/:id",async(req,res)=>{
+        try {
+            const user = await User.findByIdAndUpdate(req.params.id, {
+                $set: {profilePicture:req.body.profilePicture}
+            })
+            res.status(200).send("Profile picture has been updated")
+        } catch (err) {
+            return res.status(500).json(err)
+        }
+    })
     //unfollow a user
 
     router.put("/:id/unfollow",async(req,res)=>{

@@ -48,9 +48,9 @@ justify-content: center;
     margin-left: 100px;
 }
 .signupInput{
-    margin-bottom: 28px;
+    margin-bottom: 20px;
     width: 300px;
-    height: 45px;
+    height: 65px;
     border-radius: 5px;
     border-color: #5B54FA ;
 }

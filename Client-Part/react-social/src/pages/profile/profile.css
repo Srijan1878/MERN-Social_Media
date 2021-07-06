@@ -13,10 +13,72 @@
 }
 .updateModal{
     position: absolute;
-    left: 55px;
-    
+    left: 55px;   
 }
+.test{
+    z-index: 55;
+    font-size: 100px;
+}
+.profileRightTop{
+    position: relative;
+}
+.profilePictureClicked{
+    position: absolute;
+    top: 50px;
+    width: 800px;
+    height: 600px;
+    left: 100px;
+    object-fit: contain;
+    background-color: white;
+    background-blend-mode: overlay;
+    border: 2px solid #5b54fa;
+    z-index: 5;
+    transition: all 0.5s;
+}
+.newProfilePicture,.uploadNewProfilePicture{
+    position: absolute;
+    z-index: 5;
+    left: 660px;
+   top: 600px;
+   outline: none;
+   border: none;
+   padding: 10px;
+}
+.submitButton{
+    z-index: 5;
+    position: absolute;
+    left: 600px;
+    top: 600px;
+    border: none;
+}
+.submitButton:hover{
+border-radius: 0px;
+}
+.newProfilePicture{
+    display: none;
+}
+.uploadNewProfilePicture{
+    cursor: pointer;
+    color:#5b54fa ;
+    transition: all 0.5s;
 
+}
+.uploadNewProfilePicture:hover{
+    background-color: #5b54fa;
+    color: white;
+}
+.closeLogo{
+    position: absolute;
+    right: 330px;
+    z-index: 55;
+    top:55px;
+    color:#5b54fa;
+    cursor: pointer;
+    transition: transform 1s ease-in;
+}
+.closeLogo:hover{
+    transform: scale(1.1);
+}
 .update{
 position: absolute;
 top: 400px;
@@ -53,6 +115,7 @@ cursor: pointer;
     top: 250px;
     border: white solid 4px;
     cursor: pointer;
+    transition: all 0.5s;
 }
 .profileInfoName{
 
