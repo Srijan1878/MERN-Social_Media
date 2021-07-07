@@ -44,6 +44,18 @@
    border: none;
    padding: 10px;
 }
+.showupdateModal{
+    position: absolute;
+    opacity: 1;
+    transition: all 0.5s;
+}
+.hiddenupdateModal{
+    position: absolute;
+    opacity: 0;
+    transform: scale(0.1);
+    transform:  translateX(50px);
+    transition: all 0.5s;
+}
 .submitButton{
     z-index: 5;
     position: absolute;

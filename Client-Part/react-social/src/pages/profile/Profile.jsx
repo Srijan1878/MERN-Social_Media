@@ -96,12 +96,11 @@ export default function Profile() {
             <button className="update" onClick={()=>{setShowUpdateModal(!showUpdateModal)}}>Update</button>
             </div>
             )}
-{showUpdateModal && (
-                <div className="updateModal">
+                <div className={showUpdateModal?"showupdateModal":"hiddenupdateModal"}>
                    <Update showUpdateModal={showUpdateModal} setShowUpdateModal={setShowUpdateModal}/>
                    
                 </div>
-                )}
+
             </div>
             <div className="profileRightBottom">
             <Feed username={username}/>
