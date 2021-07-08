@@ -28,27 +28,9 @@ export default function Profile() {
     } 
         fetchUsers();
     },[username])
-    /*const changeHandler=(e)=>{
-        console.log(e)
-        setNewProfilePicture(e.target.files[0])
-        console.log(newProfilePicture)
-    }*/
     const PF=process.env.REACT_APP_PUBLIC_FOLDER;
     const newProfilePicSubmitHandler = async(e)=>{
             e.preventDefault();
-            /*if (newProfilePicture) {
-              const data = new FormData();
-              const fileName = newProfilePicture.name;
-              data.append("name", fileName);
-              data.append("file", newProfilePicture);
-              user.profilePicture = fileName;
-              console.log(user.profilePicture);
-              try {
-                await axios.post("/upload", data);
-              } catch (err) {
-                  console.log(err)
-              }
-            }*/
             try {
               await axios.put("/users/profilePicture/"+currentUser._id, {
                   profilePicture:newProfilePicture?.name
@@ -69,24 +51,20 @@ export default function Profile() {
             src={user.profilePicture?PF+user.profilePicture:PF+"NoProfile.png"}
             alt="" 
             className="profileUserImg" 
-            onClick={()=>{setShowProfilePicture(true)}}
+            onClick={()=>{setShowProfilePicture(!showProfilePicture)}}
             />
             </div>
             <img 
             src={PF+user.coverPicture } 
             alt="" 
             className="profileCoverImg" /> 
-            {showProfilePicture && (
-                <div className="profilePictureContainer" >
-                    <img className="profilePictureClicked" src={user.profilePicture?PF+user.profilePicture:PF+"NoProfile.png"} alt="" />
-                    <Cancel className="closeLogo" onClick={()=>{setShowProfilePicture(false)}}/>
-                   {/* <form encType="multipart/form-data" onSubmit={newProfilePicSubmitHandler}>
-                        <label htmlFor="file"> <p className="uploadNewProfilePicture">Upload New profile Picture</p>
-                        <input type="file"  accept=".png,.jpeg,.jpg" onChange={(e)=>{console.log(e)}} name="newProfilePicture" className="newProfilePicture" /></label>    
-                    <button type="submit" className="submitButton" >Upload</button>
-                    </form>*/}
+
+                <div className={showProfilePicture?"profilePictureContainer":"hiddenProfilePictureContainer"} >
+                    <img className={showProfilePicture?"profilePictureClicked":"profilePictureNotClicked"} src={user.profilePicture?PF+user.profilePicture:PF+"NoProfile.png"} alt="" />
+                    <Cancel className={showProfilePicture?"closeLogo":"hiddenCloseLogo"} onClick={()=>{setShowProfilePicture(!showProfilePicture)}}/>
+ 
                 </div>
-            )}
+
             <div className="profileInfo">
                 <h4 className="profileInfoName">{user?.username}</h4>
                 <span className="profileInfoDesc">{user.desc}</span>

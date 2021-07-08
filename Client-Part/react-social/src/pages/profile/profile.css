@@ -33,6 +33,28 @@
     background-blend-mode: overlay;
     border: 2px solid #5b54fa;
     z-index: 5;
+    opacity: 1;
+    transform: scale(1);
+    transition: all 0.5s;
+}
+
+.hiddenProfilePictureContainer{
+    height: 0px;
+    width: 0px;
+}
+.profilePictureNotClicked{
+    position: absolute;
+    top: 300px;
+    left:550px;
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    transform: scale(0.1);
+   /* opacity: 0;*/
+    transition: all 0.5s;
+}
+.profilePictureContainer{
+    opacity: 1;
     transition: all 0.5s;
 }
 .newProfilePicture,.uploadNewProfilePicture{
@@ -85,8 +107,22 @@ border-radius: 0px;
     z-index: 55;
     top:55px;
     color:#5b54fa;
+    opacity: 1;
     cursor: pointer;
-    transition: transform 1s ease-in;
+    transform: scale(1);
+    transition: all 2s;
+
+}
+.hiddenCloseLogo{
+    position: absolute;
+    opacity: 0;
+    right: 330px;
+    z-index: 55;
+    top:55px;
+    color:#5b54fa;
+    cursor: pointer;
+    transform: scale(0);
+    transition: transform 2s ;
 }
 .closeLogo:hover{
     transform: scale(1.1);
@@ -125,12 +161,12 @@ cursor: pointer;
     right: 0;
     margin: auto;
     top: 250px;
+    z-index: 5;
     border: white solid 4px;
     cursor: pointer;
-    transition: all 0.5s;
+  
 }
 .profileInfoName{
-
     padding-top: 60px;
    text-align: center;
    font-size: 25px;
