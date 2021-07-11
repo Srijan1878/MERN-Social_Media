@@ -99,6 +99,27 @@ router.get("/friends/:userId",async(req,res)=>{
 res.status(500).json(err)
     }
 })
+//get all users
+router.get("/friends",async(req,res)=>{
+    try{
+       const user= await User.find({})
+        res.status(200).json(user)
+    }
+    catch(err){
+        console.log(err)
+    }
+    
+})
+
+//finding user suggestion
+router.get("/suggest/:id",async(req,res)=>{
+    try{
+const user = await User.findById(req.params.id)
+res.status(200).json(user)
+}catch(err){
+    console.log(err)
+}
+})
 
 //follow a user
 router.put("/:id/follow",async(req,res)=>{

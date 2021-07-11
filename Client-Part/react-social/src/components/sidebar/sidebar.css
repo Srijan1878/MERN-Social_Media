@@ -4,7 +4,6 @@
     overflow-y: scroll;
     position: sticky;
     top: 70px;
-
 }
 ::-webkit-scrollbar{
     width: 1px;
@@ -26,7 +25,12 @@
 .sidebarListItem{
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+ 
+    padding: 10px;
+}
+.sidebarListItem:hover{
+background-color: rgb(221, 209, 209);
+
 }
 .sidebarIcon{
     padding-right:15px;

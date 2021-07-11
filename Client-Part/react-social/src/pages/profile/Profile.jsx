@@ -62,7 +62,6 @@ export default function Profile() {
                 <div className={showProfilePicture?"profilePictureContainer":"hiddenProfilePictureContainer"} >
                     <img className={showProfilePicture?"profilePictureClicked":"profilePictureNotClicked"} src={user.profilePicture?PF+user.profilePicture:PF+"NoProfile.png"} alt="" />
                     <Cancel className={showProfilePicture?"closeLogo":"hiddenCloseLogo"} onClick={()=>{setShowProfilePicture(!showProfilePicture)}}/>
- 
                 </div>
 
             <div className="profileInfo">

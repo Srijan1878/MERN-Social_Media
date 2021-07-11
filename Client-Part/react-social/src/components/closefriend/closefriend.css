@@ -1,0 +1,17 @@
+
+.sidebarFriend{
+    padding: 10px;
+    cursor: pointer;
+    width: 80%;
+}
+.listContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.followIcon{
+    transition: all 0.5s;
+}
+.followIcon:hover{
+transform: scale(1.5);
+}

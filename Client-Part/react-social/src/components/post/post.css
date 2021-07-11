@@ -72,10 +72,10 @@ p.delete:after{  transform-origin:  0% 50%; }
     display: flex; 
     align-items: center;
 }
-.like{
-    color:#1877F2;
+.star{
     width: 22px;
     height:22px;
+    margin-left: 10px;
     margin-right: 5px;
     cursor: pointer;
 }

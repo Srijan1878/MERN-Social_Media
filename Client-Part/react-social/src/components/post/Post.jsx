@@ -4,7 +4,10 @@ import {
   MoreVert,
   Send,
   ThumbUpAlt,
+  StarBorderIcon,
+  StarBorder,
 } from "@material-ui/icons";
+import StarIcon from '@material-ui/icons/Star';
 import "./post.css";
 import axios from "axios";
 import { useContext, useEffect, useRef, useState } from "react";
@@ -12,12 +15,13 @@ import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 export default function Post({ post }) {
+  const { user: currentUser } = useContext(AuthContext);
   const [like, setLike] = useState(post.likes.length);
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(post.likes.includes(currentUser?._id));
   const [users, setUsers] = useState({});
   //const [commentTexts,setCommentTexts] = useState([])
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  const { user: currentUser } = useContext(AuthContext);
+
   const [showComments, setShowComments] = useState(false);
   const commentTextInput = useRef();
 
@@ -25,7 +29,7 @@ export default function Post({ post }) {
     const fetchUsers = async () => {
       const res = await axios.get(`/users?userId=${post.userId}`);
       setUsers(res.data);
-    console.log(res.data)
+    /*console.log(res.data)*/
     };
     fetchUsers();
   }, [post.userId]);
@@ -111,9 +115,8 @@ console.log(err)
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">
-            <ThumbUpAlt className="like" onClick={likeCounter} />
-            <Favorite className="love" />
-            <span className="postLikeCounter">{like} people liked it</span>
+            {isLiked?(<StarIcon className="star" onClick={likeCounter} style={{color:'#F1C40F',transform:"scale(1.2)"}} />):(<StarBorder className="star"  onClick={likeCounter} style={{color:'#F1C40F',transform:"scale(1.2)"}} />)}
+            <span className="postLikeCounter">{like} people starred it</span>
           </div>
           <div className="postBottomRight"></div>
           <span className="postCommentText">
