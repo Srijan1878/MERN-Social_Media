@@ -36,14 +36,14 @@ export default function Topbar() {
   }
   const deleteUser=async()=>{
     try{
-      await axios.delete(`/users/${user._id}`,{ data: { userId: user._id }})
+      await axios.delete(`/users/${user._id}`,{headers:{"auth-token":sessionStorage.getItem("token")}},{ data: { userId: user._id }})
     }catch(err){
       console.log(err)
     }
   }
   const deletePosts=async()=>{
     try{
-      await axios.delete(`/posts/delete/${user._id}`,{ data: { userId: user._id }})
+      await axios.delete(`/posts/delete/${user._id}`,{headers:{"auth-token":sessionStorage.getItem("token")}},{ data: { userId: user._id }})
     }catch(err){
       console.log(err)
     }

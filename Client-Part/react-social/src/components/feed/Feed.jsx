@@ -10,8 +10,8 @@ const [posts,setPosts] = useState([])
 const {user} = useContext(AuthContext)
 useEffect(()=>{
     const fetchPosts=async()=>{
-        const res = username?await axios.get("/posts/profile/"+username)
-        : await axios.get("/posts/timeline/"+user._id)
+        const res = username?await axios.get("/posts/profile/"+username,{headers:{"auth-token":sessionStorage.getItem("token")}})
+        : await axios.get("/posts/timeline/"+user._id,{headers:{"auth-token":sessionStorage.getItem("token")}})
         setPosts(res.data.sort((p1,p2)=>{
             return new Date(p2.createdAt)-new Date(p1.createdAt)
         })
@@ -19,6 +19,7 @@ useEffect(()=>{
     } 
     fetchPosts()
 },[username,user._id])
+
      return (
        <div className="feed">
            <div className="feedWrapper">

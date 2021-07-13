@@ -17,8 +17,8 @@ useEffect(()=>{
     let userMatch = false
    
     async function getFetchData(){
-        await axios.get("/users/friends").then(res=>allUsers=res.data).catch(err=>console.log(err));
-        await  axios.get("/users/friends/"+user._id).then(res=>frnds=(res.data)).catch(err=>console.log(err));
+        await axios.get("/users/friends",{headers:{"auth-token":sessionStorage.getItem("token")}}).then(res=>allUsers=res.data).catch(err=>console.log(err));
+        await  axios.get("/users/friends/"+user._id,{headers:{"auth-token":sessionStorage.getItem("token")}}).then(res=>frnds=(res.data)).catch(err=>console.log(err));
         allUsers?.map((u) => {
             frnds?.map(
                   (friend) => (friend._id===u._id) && (userMatch = true)
@@ -33,8 +33,6 @@ useEffect(()=>{
               setSuggestions(suggest)
     }
         getFetchData()
-
-        console.log("suorer bach")
 
   },[])   
 

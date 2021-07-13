@@ -22,7 +22,7 @@ export default function Profile() {
    
     useEffect(()=>{
         const fetchUsers=async()=>{
-            const res= await axios.get(`/users?username=${username}`)
+            const res= await axios.get(`/users?username=${username}`,{headers:{"auth-token":sessionStorage.getItem("token")}})
             setUser(res.data)
             console.log(user?._id)
     } 
@@ -32,7 +32,7 @@ export default function Profile() {
     const newProfilePicSubmitHandler = async(e)=>{
             e.preventDefault();
             try {
-              await axios.put("/users/profilePicture/"+currentUser._id, {
+              await axios.put("/users/profilePicture/"+currentUser._id,{headers:{"auth-token":sessionStorage.getItem("token")}}, {
                   profilePicture:newProfilePicture?.name
               });
             } catch (err) {

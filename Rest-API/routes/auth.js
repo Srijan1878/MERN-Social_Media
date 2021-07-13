@@ -2,9 +2,10 @@ const router = require("express").Router();
 const User = require("../models/User")
 const bcrypt = require('bcrypt')
 const saltRounds = 10
+const jwt =require('jsonwebtoken')
+const verify = require('./verifyToken')
 
 router.post("/register", async (req, res) => {
-
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, saltRounds)
         const newUser = new User({
@@ -26,15 +27,19 @@ router.post("/login", async (req, res) =>{
 
         const validPassword = await bcrypt.compare(req.body.password, user.password)
         !validPassword && res.status(400).json("Wrong password")
-
-        res.status(200).json(user)
+        
+        const token = jwt.sign({_id:user._id},'secretkey')
+        
+        
+        res.status(200).json({user,token})
+       
     }
     catch (err) {
         console.log(err)
     }
 })
-/*const verify=(req,res,next)=>{
-const authHeader = 
-}*/
+router.get("/test",verify,async(req,res)=>{
+    res.send("you are autheticated")
+})
 module.exports = router
 

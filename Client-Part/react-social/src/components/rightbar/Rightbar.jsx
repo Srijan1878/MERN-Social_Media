@@ -12,7 +12,7 @@ export default function Rightbar({ user }) {
   const { user: currentUser, dispatch } = useContext(AuthContext);
   const [isFollowed, setIsFollowed] = useState(
     currentUser.followings.includes(user?._id)
-  );
+);
   useEffect(() => {
     console.log(user ? user._id : user);
     console.log(currentUser);
@@ -21,7 +21,7 @@ export default function Rightbar({ user }) {
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendList = await axios.get("/users/friends/" + user?._id);
+        const friendList = await axios.get("/users/friends/" + user?._id,{headers:{"auth-token":sessionStorage.getItem("token")}});
         setFriends(friendList.data);
       } catch (err) {
         console.log(err);
@@ -33,7 +33,7 @@ export default function Rightbar({ user }) {
     console.log(isFollowed);
     try {
       if (isFollowed) {
-        await axios.put(`/users/${user?._id}/unfollow`, {
+        await axios.put(`/users/${user?._id}/unfollow`, {headers:{"auth-token":sessionStorage.getItem("token")}},{
           userId: currentUser._id,
         });
         dispatch({ type: "UNFOLLOW", payload: user._id });

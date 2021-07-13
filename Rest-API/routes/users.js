@@ -4,6 +4,7 @@ const User = require("../models/User");
 const Post = require("../models/Post");
 const { response } = require("express");
 const saltRounds = 10
+const verify = require ('./verifyToken')
 
 //resetting userpassword
 router.put("/reset",async(req,res)=>{
@@ -16,7 +17,7 @@ router.put("/reset",async(req,res)=>{
 }
 })
 //Update a user
-router.put("/:id", async (req, res) => {
+router.put("/:id",verify, async (req, res) => {
     /* if (req.body.userId === req.params.id || req.body.isAdmin) {
          if (req.body.password) {
              try {
@@ -40,7 +41,7 @@ router.put("/:id", async (req, res) => {
      }*/
  )
 //delete a user and his posts
-router.delete("/:id", async (req, res) => {
+router.delete("/:id",verify, async (req, res) => {
     if (req.body.userId === req.params.id || req.body.isAdmin) {
         try {
             const user = await User.findByIdAndDelete(req.params.id)
@@ -80,7 +81,7 @@ router.post("/search",(req,res)=>{
     })
 })
 //get friends
-router.get("/friends/:userId",async(req,res)=>{
+router.get("/friends/:userId",verify,async(req,res)=>{
 
     try{
     const user = await User.findById(req.params.userId)
@@ -100,7 +101,7 @@ res.status(500).json(err)
     }
 })
 //get all users
-router.get("/friends",async(req,res)=>{
+router.get("/friends",verify,async(req,res)=>{
     try{
        const user= await User.find({})
         res.status(200).json(user)
@@ -112,7 +113,7 @@ router.get("/friends",async(req,res)=>{
 })
 
 //finding user suggestion
-router.get("/suggest/:id",async(req,res)=>{
+router.get("/suggest/:id",verify,async(req,res)=>{
     try{
 const user = await User.findById(req.params.id)
 res.status(200).json(user)
@@ -122,7 +123,7 @@ res.status(200).json(user)
 })
 
 //follow a user
-router.put("/:id/follow",async(req,res)=>{
+router.put("/:id/follow",verify,async(req,res)=>{
     
         if(req.body.id!==req.params.id){
             try{
@@ -142,7 +143,7 @@ if(!user.followers.includes(req.body.userId)){
         
     })
      //updating profilePicture
-     router.put("/profilePicture/:id",async(req,res)=>{
+     router.put("/profilePicture/:id",verify,async(req,res)=>{
         try {
             const user = await User.findByIdAndUpdate(req.params.id, {
                 $set: {profilePicture:req.body.profilePicture}
@@ -154,7 +155,7 @@ if(!user.followers.includes(req.body.userId)){
     })
     //unfollow a user
 
-    router.put("/:id/unfollow",async(req,res)=>{
+    router.put("/:id/unfollow",verify,async(req,res)=>{
     
         if(req.body.id!==req.params.id){
             try{
@@ -173,12 +174,5 @@ if(user.followers.includes(req.body.userId)){
     }else{res.status(403).json("you can't unfollow yourself")}
         
     })
-    //logout 
-    /*router.get("/logout",async(req,res)=>{
-        try{
-       
-        }catch(err){
-        res.status(500).json(err)
-        }
-    })*/
+    
 module.exports = router

@@ -16,7 +16,7 @@ export default function ForgotPassword() {
         setShowValidation(true)
       try{
         e.preventDefault()
-        await axios.put("/users/reset",{
+        await axios.put("/users/reset",{headers:{"auth-token":sessionStorage.getItem("token")}},{
           email:emailText,
           password:newPasswordText
         })

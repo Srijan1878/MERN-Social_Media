@@ -18,7 +18,7 @@ export default function Update({showUpdateModal,setShowUpdateModal}) {
         e.preventDefault()
         try{
             console.log(updateValue)
-            await axios.put("/users/"+currentUser._id,{
+            await axios.put("/users/"+currentUser._id,{headers:{"auth-token":sessionStorage.getItem("token")}},{
                 desc:updateValue.desc,
                 city:updateValue.city,
                 from:updateValue.from,

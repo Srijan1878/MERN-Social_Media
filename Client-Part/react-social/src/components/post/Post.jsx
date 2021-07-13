@@ -27,7 +27,9 @@ export default function Post({ post }) {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const res = await axios.get(`/users?userId=${post.userId}`);
+      const res = await axios.get(`/users?userId=${post.userId}`,{headers:{
+        "auth-token":sessionStorage.getItem("token")
+      }});
       setUsers(res.data);
     /*console.log(res.data)*/
     };
@@ -51,14 +53,14 @@ export default function Post({ post }) {
   };
   const fetchComments = async () => {
     try {
-      const res = await axios.get("/posts/" + post._id + "/comments");
+      const res = await axios.get("/posts/" + post._id + "/comments",{headers:{"auth-token":sessionStorage.getItem("token")}});
     } catch (err) {
       console.log(err);
     }
   };
 const deletePost = async()=>{
 try{
-await axios.delete('/posts/'+post._id, { data: { userId: currentUser._id } });
+await axios.delete('/posts/'+post._id, {headers:{"auth-token":sessionStorage.getItem("token")}},{ data: { userId: currentUser._id } });
 window.location.reload()
 }catch(err){
 console.log(err)
@@ -72,7 +74,7 @@ console.log(err)
   }, [post]);
   const postComments = async () => {
     try {
-      await axios.put("/posts/" + post._id + "/comment", {
+      await axios.put("/posts/" + post._id + "/comment", {headers:{"auth-token":sessionStorage.getItem("token")}},{
         text: commentTextInput.current.value,
         username: currentUser.username,
       });
