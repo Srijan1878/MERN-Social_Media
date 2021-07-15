@@ -82,7 +82,7 @@ console.log(err)
       console.log(err);
     }
 
-    window.location.reload();
+    //window.location.reload();
   };
   return (
     <div className="post">

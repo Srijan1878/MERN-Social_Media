@@ -19,8 +19,10 @@ export default function Share() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    console.log("helo")
+    console.log(user._id)
     const newPost = {
-      userId: user._id,
+      userId: user?._id,
       desc: desc.current.value,
     };
     if (file) {
@@ -31,13 +33,13 @@ export default function Share() {
       newPost.img = fileName;
       console.log(newPost);
       try {
-        await axios.post("/upload", data);
+        await axios.post("/upload",data);
       } catch (err) {
           console.log(err)
       }
     }
     try {
-      await axios.post("/posts", newPost);
+      await axios.post("/posts",newPost,{headers:{"auth-token":sessionStorage.getItem("token")}});
       window.location.reload();
     } catch (err) {
         console.log(err)

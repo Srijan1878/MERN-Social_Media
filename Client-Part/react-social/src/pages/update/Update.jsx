@@ -18,12 +18,12 @@ export default function Update({showUpdateModal,setShowUpdateModal}) {
         e.preventDefault()
         try{
             console.log(updateValue)
-            await axios.put("/users/"+currentUser._id,{headers:{"auth-token":sessionStorage.getItem("token")}},{
+            await axios.put("/users/"+currentUser._id,{
                 desc:updateValue.desc,
                 city:updateValue.city,
                 from:updateValue.from,
                 relationship:updateValue.relationship
-            })
+            },{headers:{"auth-token":sessionStorage.getItem("token")}})
             console.log("updated")
            window.location.reload()
         }catch(err){
@@ -32,7 +32,7 @@ export default function Update({showUpdateModal,setShowUpdateModal}) {
         console.log(updateValue.relationship)
         }
     return (
-        <div>          
+        <div className="overlay">          
            <form onSubmit={submitHandler} className="updateForm">
            <h2 className="updateTitle">Update Your About Section</h2>
                <label htmlFor="desc">Description:</label>

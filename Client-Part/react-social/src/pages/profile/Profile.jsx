@@ -29,7 +29,7 @@ export default function Profile() {
         fetchUsers();
     },[username])
     const PF=process.env.REACT_APP_PUBLIC_FOLDER;
-    const newProfilePicSubmitHandler = async(e)=>{
+   /* const newProfilePicSubmitHandler = async(e)=>{
             e.preventDefault();
             try {
               await axios.put("/users/profilePicture/"+currentUser._id,{headers:{"auth-token":sessionStorage.getItem("token")}}, {
@@ -38,13 +38,13 @@ export default function Profile() {
             } catch (err) {
                 console.log(err)
             }
-          };    
+          }; */   
     return (
         <>
          <Topbar/>
             <div className="profile">
             <Sidebar/>
-            <div className="profileRight">   
+            <div className="profileRight" >   
             <div className="profileRightTop"> 
             <div className="profileCover">
             <img 
@@ -73,8 +73,8 @@ export default function Profile() {
             <button className="update" onClick={()=>{setShowUpdateModal(!showUpdateModal)}}>Update</button>
             </div>
             )}
-                <div className={showUpdateModal?"showupdateModal":"hiddenupdateModal"}>
-                   <Update showUpdateModal={showUpdateModal} setShowUpdateModal={setShowUpdateModal}/>
+                <div className={showUpdateModal?"showupdateModal":"hiddenupdateModal"} >
+                   <Update showUpdateModal={showUpdateModal} setShowUpdateModal={setShowUpdateModal} />
                    
                 </div>
 

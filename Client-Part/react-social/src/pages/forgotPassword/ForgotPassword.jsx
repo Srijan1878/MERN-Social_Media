@@ -16,10 +16,10 @@ export default function ForgotPassword() {
         setShowValidation(true)
       try{
         e.preventDefault()
-        await axios.put("/users/reset",{headers:{"auth-token":sessionStorage.getItem("token")}},{
+        await axios.put("/users/reset",{
           email:emailText,
           password:newPasswordText
-        })
+        },{headers:{"auth-token":sessionStorage.getItem("token")}})
         history.push('/login')
       }catch(err){
         console.log(err)
