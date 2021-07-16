@@ -67,7 +67,7 @@ useEffect(()=>{
             </ul>
             <button className="sidebarButton">Show more</button>
                 <hr className="sidebarHr" />
-                <h3 style={{marginBottom:"10px"}}> Suggestions</h3>
+                <h3 style={{marginBottom:"10px"}} className="suggestionTitle"> Suggestions</h3>
                 <ul className="sidebarFriendlist">   
        {suggestions.map((suggestion)=>(
            suggestion._id!==user._id && <CloseFriend key={suggestion?._id} suggestion={suggestion}/>

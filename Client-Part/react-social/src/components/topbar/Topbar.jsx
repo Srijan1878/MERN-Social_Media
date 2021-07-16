@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import HomeIcon from '@material-ui/icons/Home';
+import PersonIcon from '@material-ui/icons/Person';
+import SettingsIcon from '@material-ui/icons/Settings';
 import axios from "axios";
 export default function Topbar() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -29,36 +31,43 @@ export default function Topbar() {
         setUserDetails(results.user);
       });
   };
-  const clickHandler=()=>{
-      sessionStorage.clear()
-      history.push('/')
-      window.location.reload()
-  }
-  const deleteUser=async()=>{
-    try{
-      await axios.delete(`/users/${user._id}`,{headers:{"auth-token":sessionStorage.getItem("token")}},{ data: { userId: user._id }})
-    }catch(err){
-      console.log(err)
+  const clickHandler = () => {
+    sessionStorage.clear();
+    history.push("/");
+    window.location.reload();
+  };
+  const deleteUser = async () => {
+    try {
+      await axios.delete(
+        `/users/${user._id}`,
+        { headers: { "auth-token": sessionStorage.getItem("token") } },
+        { data: { userId: user._id } }
+      );
+    } catch (err) {
+      console.log(err);
     }
-  }
-  const deletePosts=async()=>{
-    try{
-      await axios.delete(`/posts/delete/${user._id}`,{headers:{"auth-token":sessionStorage.getItem("token")}},{ data: { userId: user._id }})
-    }catch(err){
-      console.log(err)
+  };
+  const deletePosts = async () => {
+    try {
+      await axios.delete(
+        `/posts/delete/${user._id}`,
+        { headers: { "auth-token": sessionStorage.getItem("token") } },
+        { data: { userId: user._id } }
+      );
+    } catch (err) {
+      console.log(err);
     }
-  }
-  const deleteHandler=async()=>{
-    try{
-      await deletePosts()
-      deleteUser()
-      sessionStorage.clear()
-      window.location.reload()
+  };
+  const deleteHandler = async () => {
+    try {
+      await deletePosts();
+      deleteUser();
+      sessionStorage.clear();
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
     }
- catch(err){
-   console.log(err)
- }
-  }
+  };
   return (
     <>
       <div className="topbarContainer">
@@ -80,25 +89,28 @@ export default function Topbar() {
         </div>
         <div className="topbarRight">
           <div className="topbarLinks">
-            <span className="topbarLink">Homebar</span>
-            <span className="topbarLink">Timeline</span>
-          </div>
-          <div className="topbarIcons">
-            <div className="topbarIconItem">
-              <Person className />
-              <span className="topbarIconBadge">1</span>
-            </div>
-            <div className="topbarIconItem">
+            <span className="topbarLink">
+            <HomeIcon/>
+            </span>
+          
+          <span className="topbarLink">
+          <Link to={`/profile/${user.username}`}>
+              <PersonIcon style={{color:"white"}}/>
+              </Link>
+          </span>          
+          <span className="topbarLink">
               <Link to="/messenger">
                 <Chat className="chatLogo" />
               </Link>
-              <span className="topbarIconBadge">2</span>
-            </div>
-            <div className="topbarIconItem">
+              </span>
+              <span className="topbarLink">
               <Notifications />
-              <span className="topbarIconBadge">3</span>
+            </span>
             </div>
-          </div>
+            <div className="profileEdit">
+            
+            
+            <span className="topbarImgLink">
           <Link to={`/profile/${user.username}`}>
             <img
               src={
@@ -110,20 +122,42 @@ export default function Topbar() {
               className="topbarImg"
             />
           </Link>
-          <span onMouseOver={()=>{setShowDropdown(true)}} onMouseLeave={()=>{setShowDropdown(false)}}>
-            <ArrowDropDownIcon className="dropdownLogo"  />
-          </span >
-          {showDropdown && (
-            <div className="dropdownMenu" >
-              <ul className="dropdownList" onMouseEnter={()=>{setShowDropdown(true)}} onMouseLeave={()=>{setShowDropdown(false)}}>
-                <li className="dropdownText" onClick={clickHandler}>Logout</li>
+          </span>
+          <span className="topbarLink">
+          <span
+            onMouseOver={() => {
+              setShowDropdown(true);
+            }}
+            onMouseLeave={() => {
+              setShowDropdown(false);
+            }}
+          >
+            
+          </span>
+          </span>
+          </div>
+          
+          {/* {showDropdown && (
+            <div className="dropdownMenu">
+              <ul
+                className="dropdownList"
+                onMouseEnter={() => {
+                  setShowDropdown(true);
+                }}
+                onMouseLeave={() => {
+                  setShowDropdown(false);
+                }}
+              >
+                <li className="dropdownText" onClick={clickHandler}>
+                  Logout
+                </li>
                 <hr className="line"></hr>
-                <li className="dropdownText" onClick={deleteHandler}>Delete Account</li>
-
-               
+                <li className="dropdownText" onClick={deleteHandler}>
+                  Delete Account
+                </li>
               </ul>
             </div>
-          )}
+          )} */}
         </div>
       </div>
       {searchValue && (
