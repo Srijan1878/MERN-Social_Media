@@ -1,3 +1,4 @@
+const CommentSchema = require("../models/Comments");
 const mongoose = require('mongoose')
 
 const PostSchema = new mongoose.Schema({
@@ -16,10 +17,8 @@ const PostSchema = new mongoose.Schema({
       type:Array,
       default:[]
   },
-  comments:{
-      type:Array,
-      default:[]
-    }
+  comments:[CommentSchema],
+  
 },
     { timestamps: true })
     module.exports = mongoose.model("Post", PostSchema)

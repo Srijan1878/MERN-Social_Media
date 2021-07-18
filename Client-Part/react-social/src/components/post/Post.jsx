@@ -14,17 +14,19 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import { v4 as uuidv4 } from 'uuid';
+import { SingleComment } from "../singleComment/SingleComment";
 export default function Post({ post }) {
   const { user: currentUser } = useContext(AuthContext);
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(post.likes.includes(currentUser?._id));
   const [users, setUsers] = useState({});
+
   //const [commentTexts,setCommentTexts] = useState([])
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const [showComments, setShowComments] = useState(false);
   const commentTextInput = useRef();
-
   useEffect(() => {
     const fetchUsers = async () => {
       const res = await axios.get(`/users?userId=${post.userId}`,{headers:{
@@ -54,6 +56,7 @@ export default function Post({ post }) {
   const fetchComments = async () => {
     try {
       const res = await axios.get("/posts/" + post._id + "/comments",{headers:{"auth-token":sessionStorage.getItem("token")}});
+      console.log(res.data[0].replies)
     } catch (err) {
       console.log(err);
     }
@@ -74,15 +77,16 @@ console.log(err)
   }, [post]);
   const postComments = async () => {
     try {
-      await axios.put("/posts/" + post._id + "/comment", {headers:{"auth-token":sessionStorage.getItem("token")}},{
+      await axios.put("/posts/" + post._id + "/comment",{
+        id:uuidv4(),
         text: commentTextInput.current.value,
         username: currentUser.username,
-      });
+      },{headers:{"auth-token":sessionStorage.getItem("token")}});
     } catch (err) {
       console.log(err);
     }
 
-    //window.location.reload();
+    window.location.reload();
   };
   return (
     <div className="post">
@@ -117,7 +121,7 @@ console.log(err)
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">
-            {isLiked?(<StarIcon className="star" onClick={likeCounter} style={{color:'#F1C40F',transform:"scale(1.2)"}} />):(<StarBorder className="star"  onClick={likeCounter} style={{color:'#F1C40F',transform:"scale(1.2)"}} />)}
+            {isLiked?(<StarIcon className="star" onClick={likeCounter} style={{color:'#F1C40F',transform:"scale(1.3)"}} />):(<StarBorder className="star"  onClick={likeCounter} style={{color:'#F1C40F',transform:"scale(1.3)"}} />)}
             <span className="postLikeCounter">{like} people starred it</span>
           </div>
           <div className="postBottomRight"></div>
@@ -145,10 +149,7 @@ console.log(err)
         {showComments && (
           <div className="comments">
             {post.comments.map((singleComment) => (
-              <div className="singleCommentComponent">
-                <h4 className="commentor">{singleComment.username}</h4>
-                <p className="singleComment">{singleComment.text}</p>
-              </div>
+              <SingleComment singleComment = {singleComment} post={post} key={singleComment.id}/>
             ))}
           </div>
         )}

@@ -1,0 +1,19 @@
+.replyCommentInput{
+    border: 1.75px solid black;
+    border-radius: 5px;
+    margin-left: 12px;
+    height: 22px;
+}
+.replyComponent{
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+
+}
+.starComment{
+    color:black;
+    opacity:0.8;
+    cursor:pointer;
+    transition: all 0.5s;
+    font-size: 13px;
+}

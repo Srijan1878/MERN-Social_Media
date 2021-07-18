@@ -33,14 +33,14 @@ export default function Rightbar({ user }) {
     console.log(isFollowed);
     try {
       if (isFollowed) {
-        await axios.put(`/users/${user?._id}/unfollow`, {headers:{"auth-token":sessionStorage.getItem("token")}},{
+        await axios.put(`/users/${user?._id}/unfollow`,{
           userId: currentUser._id,
-        });
+        },{headers:{"auth-token":sessionStorage.getItem("token")}});
         dispatch({ type: "UNFOLLOW", payload: user._id });
       } else {
         await axios.put(`/users/${user._id}/follow`, {
           userId: currentUser._id,
-        });
+        },{headers:{"auth-token":sessionStorage.getItem("token")}});
         dispatch({ type: "FOLLOW", payload: user._id });
       }
     } catch (err) {

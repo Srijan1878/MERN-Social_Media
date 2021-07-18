@@ -3,6 +3,62 @@ const Post = require("../models/Post");
 const User = require("../models/User");
 const verify = require("./verifyToken");
 
+
+//reply to a comment
+// router.put("/get-comments/:id/:commentId",async (req,res)=>{
+//     const post =  await Post.findById(req.params.id)   
+//     const comment = await post.comments.id(req.params.commentId)
+//     let ee = await post.comments.indexOf(comment)
+//     try{ 
+//         //await Post.update({$push:{replies:{text:req.body.text,username:req.body.username}}})
+//         //await comment.replies.push({text:req.body.text,username:req.body.username})
+//         //await comments.save()
+//         //const post = await Post.find({'comments._id':req.params.commentId}) 
+    
+//       Post.findOneAndUpdate({'comments._id':req.params.commentId,'comments.replies':{$exists:true}},{$push:{'comments.$[elem].replies': {text:req.body.text,username:req.body.username}}},{ arrayFilters: [{ elem:ee }] }, function(err, doc) {
+//              if(!err){
+//         res.status(200).json("done")
+//              }else{
+//             console.log(err) 
+//             }
+//         });
+    
+//             //res.status(200).json(post.comments)    
+//     }catch(err){
+//         res.status(500).json(err)
+//     }
+// })
+router.put("/get-comments/:id/:commentId",(req, res) => {
+    const id = req.params.id;
+    const commentId = req.params.commentId;
+    Post.findOneAndUpdate(
+      { _id: id, comments: { $elemMatch: { _id: commentId } } },
+      {
+        $push: { "comments.$.replies": {text:req.body.text,username:req.body.username}},
+      },
+      (err, result) => {
+        if (err) res.send(err);
+        else if (result) res.send(result);
+      }
+    );
+  });
+
+//like a comment
+router.put("/like/:id/:commentId",(req, res) => {
+    const id = req.params.id;
+    const commentId = req.params.commentId;
+    Post.findOneAndUpdate(
+      { _id: id, comments: { $elemMatch: { _id: commentId } } },
+      {
+        $push: { "comments.$.likes": req.body.userId},
+      },
+      (err, result) => {
+        if (err) res.send(err);
+        else if (result) res.status(200).json("Thanks for liking the comment");
+      }
+    );
+  });
+
 //create a post
 router.post("/",verify,async (req,res)=>{
     const newPost = new Post(req.body)
@@ -84,14 +140,23 @@ router.put("/:id/like",verify,async (req,res)=>{
     }
 })
 //comment on a post
-router.put("/:id/comment",verify,async (req,res)=>{
+router.put("/:id/comment",async (req,res)=>{
     try{
         const post = await Post.findById(req.params.id)
-        await post.update({$push:{comments:{text:req.body.text,username:req.body.username}}})
+        await post.update({$push:{comments:{text:req.body.text,username:req.body.username,likes:req.body.likes,replies:req.body.replies}}})
         //await post.updateOne({$push:{comments:{}}})
         res.status(200).json("Thanks for commenting on the post")
         }catch(err){
        res.status(500).json(err)
+        }
+    })
+    //reply to a post
+    router.get("/:id/comment/reply",async(req,res)=>{
+        try{
+            const post = await Post.findById(req.params.id)
+            await post.comments.update
+        }catch(err){
+            console.log(err)
         }
     })
     //get comments of a post

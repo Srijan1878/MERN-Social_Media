@@ -20,6 +20,7 @@ app.use(cors())
 mongoose.connect("mongodb://localhost:27017/SocialDB",{useNewUrlParser:true,useUnifiedTopology:true})
 /*mongoose.connect(process.env.MONGO_URI,{useNewUrlParser:true,useUnifiedTopology:true})*/
 mongoose.set('useCreateIndex', true);
+mongoose.set('useFindAndModify', false);
 app.use("/api/users",userRoute)
 app.use("/api/auth",authRoute)
 app.use("/api/posts",postRoute)

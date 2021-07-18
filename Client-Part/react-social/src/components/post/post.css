@@ -110,8 +110,11 @@ p.delete:after{  transform-origin:  0% 50%; }
     font-size :16px;
     padding-left: 5px;
 }
+.postBottomLeft{
+    margin-left: 10px;
+}
 .showComments{
-    margin-left: 35px;
+    margin-left: 18px;
     margin-top: 20px;
     color: #5b54fa;
     outline: none;
@@ -135,6 +138,8 @@ p.delete:after{  transform-origin:  0% 50%; }
 }
 .singleComment{
     padding-bottom: 5px;
+    color: black;
+    opacity: 1;
 }
 .commentInputField{
     align-items: center;
@@ -153,4 +158,14 @@ p.delete:after{  transform-origin:  0% 50%; }
 .sendlogo:hover{
     filter: brightness(1.2);
     transform: scaleX(1.11);
+}
+.commentReactionContainer{
+    display: flex;
+    margin-top: 8px;
+    justify-content: space-between;
+    width: 120px;
+    margin-left: 13px;
+}
+.singleCommentComponent{
+    margin-left: 12px;
 }
