@@ -1,5 +1,5 @@
 .singleReplyComponent{
-    background-color: rgba(180, 170, 170, 0.897);
+    background-image: linear-gradient(to bottom, #d2d0e7, #f0e3e3,#d2d0e7);
     margin-top: 5px;
     border-radius: 10px;
     width: 300px;

@@ -16,4 +16,13 @@
     cursor:pointer;
     transition: all 0.5s;
     font-size: 13px;
+    transition: all 0.25s;
+}
+.starredComment{
+    color: #f5c609;
+    opacity:0.8;
+    transition: all 0.25s;
+    cursor:pointer;
+    transition: all 0.5s;
+    font-size: 13px;
 }

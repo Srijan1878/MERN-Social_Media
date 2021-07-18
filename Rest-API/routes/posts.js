@@ -44,19 +44,36 @@ router.put("/get-comments/:id/:commentId",(req, res) => {
   });
 
 //like a comment
-router.put("/like/:id/:commentId",(req, res) => {
+router.put("/like/:id/:commentId",async(req, res) => {
     const id = req.params.id;
     const commentId = req.params.commentId;
-    Post.findOneAndUpdate(
-      { _id: id, comments: { $elemMatch: { _id: commentId } } },
-      {
-        $push: { "comments.$.likes": req.body.userId},
-      },
-      (err, result) => {
-        if (err) res.send(err);
-        else if (result) res.status(200).json("Thanks for liking the comment");
-      }
-    );
+    const post =  await Post.findById(id);
+    const comment = post.comments.id(req.params.commentId)
+    if(!comment.likes.includes(req.body.userId)){
+        Post.findOneAndUpdate(
+            { _id: id, comments: { $elemMatch: { _id: commentId } } },
+            {
+              $push: { "comments.$.likes": req.body.userId},
+            },
+            (err, result) => {
+              if (err) res.send(err);
+              else if (result) res.status(200).json("Thanks for liking the comment");
+            }
+          );
+        }
+          else{
+            Post.findOneAndUpdate(
+                { _id: id, comments: { $elemMatch: { _id: commentId } } },
+                {
+                  $pull: { "comments.$.likes": req.body.userId},
+                },
+                (err, result) => {
+                  if (err) res.send(err);
+                  else if (result) res.status(200).json("Thanks for disliking the comment");
+                }
+              ); 
+          }
+   
   });
 
 //create a post

@@ -27,7 +27,7 @@ const commentStarCounter = async() => {
     await axios.put("posts/like/"+post._id +"/"+ singleComment._id,{
       userId:currentUser._id
     })
-    setIsStarred(true)
+    setIsStarred(!isStarred)
   }catch(err){
     console.log(err)
   }
@@ -39,7 +39,7 @@ const commentStarCounter = async() => {
                 <p className="singleComment">{singleComment.text}</p>
               </div>
               <div className="commentReactionContainer">
-                <p className="starComment" onClick={commentStarCounter}>{isStarred?"Starred":"Star"}</p>
+                <p className={isStarred?"starredComment":"starComment"} onClick={commentStarCounter}>{isStarred?"Starred":"Star"}</p>
                 <p className="replyComment" style={{color:"black",opacity:0.8,cursor:"pointer",fontSize:"13px"}} onClick={()=>{setShowReply(!showReply)}}>Reply</p>
               </div>
               {singleComment.replies.map((reply)=>(
