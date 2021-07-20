@@ -1,12 +1,11 @@
 import "./topbar.css";
-import { Search, Person, Chat, Notifications } from "@material-ui/icons";
+import { Search, Chat, Notifications } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import HomeIcon from '@material-ui/icons/Home';
 import PersonIcon from '@material-ui/icons/Person';
-import SettingsIcon from '@material-ui/icons/Settings';
 import axios from "axios";
 export default function Topbar() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;

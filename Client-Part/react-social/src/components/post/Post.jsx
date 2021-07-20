@@ -1,10 +1,5 @@
 import {
-  ContactSupport,
-  Favorite,
-  MoreVert,
   Send,
-  ThumbUpAlt,
-  StarBorderIcon,
   StarBorder,
 } from "@material-ui/icons";
 import StarIcon from '@material-ui/icons/Star';
@@ -21,7 +16,7 @@ export default function Post({ post }) {
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(post.likes.includes(currentUser?._id));
   const [users, setUsers] = useState({});
-
+  const [comments,setComments] = useState([]);
   //const [commentTexts,setCommentTexts] = useState([])
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
@@ -45,7 +40,7 @@ export default function Post({ post }) {
     try {
       await axios.put("/posts/" + post._id + "/like", {
         userId: currentUser._id,
-      });
+      },{headers:{"auth-token":sessionStorage.getItem("token")}});
     } catch (err) {
       console.log(err);
     }
@@ -53,14 +48,9 @@ export default function Post({ post }) {
     setLike(isLiked ? like - 1 : like + 1, setIsLiked(true));
     setIsLiked(!isLiked);
   };
-  const fetchComments = async () => {
-    try {
-      const res = await axios.get("/posts/" + post._id + "/comments",{headers:{"auth-token":sessionStorage.getItem("token")}});
-      console.log(res.data[0].replies)
-    } catch (err) {
-      console.log(err);
-    }
-  };
+
+
+  //deleting a post
 const deletePost = async()=>{
 try{
 await axios.delete('/posts/'+post._id, {headers:{"auth-token":sessionStorage.getItem("token")}},{ data: { userId: currentUser._id } });
@@ -69,12 +59,27 @@ window.location.reload()
 console.log(err)
 }
 }
+
+//Fetching comments 
+const fetchComments = async () => {
+  try {
+    const res = await axios.get("/posts/" + post._id + "/comments",{headers:{"auth-token":sessionStorage.getItem("token")}});
+    setComments(res.data)
+  } catch (err) {
+    console.log(err);
+  }
+};
+useEffect(() =>{
+  fetchComments()
+},[])
+
+//posting a comment
   const postCommentHandler = async () => {
     await postComments();
+     fetchComments()
   };
-  useEffect(() => {
-    fetchComments();
-  }, [post]);
+
+  //posting a comments
   const postComments = async () => {
     try {
       await axios.put("/posts/" + post._id + "/comment",{
@@ -85,9 +90,11 @@ console.log(err)
     } catch (err) {
       console.log(err);
     }
-
-    window.location.reload();
+    commentTextInput.current.value = "";
+    //window.location.reload();
   };
+
+
   return (
     <div className="post">
       <div className="postWrapper">
@@ -148,7 +155,7 @@ console.log(err)
         </button>
         {showComments && (
           <div className="comments">
-            {post.comments.map((singleComment) => (
+            {comments.map((singleComment) => (
               <SingleComment singleComment = {singleComment} post={post} key={singleComment.id}/>
             ))}
           </div>
