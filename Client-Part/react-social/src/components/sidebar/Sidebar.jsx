@@ -4,7 +4,8 @@ import { AuthContext } from '../../context/AuthContext'
 import CloseFriend from '../closefriend/CloseFriend'
 import  './sidebar.css'
 import axios from 'axios'
-
+import { Link } from 'react-router-dom'
+import {motion} from 'framer-motion'
 
 export default function Sidebar() {
 const {user} = useContext(AuthContext)
@@ -37,14 +38,16 @@ useEffect(()=>{
   },[])   
 
     return (
-        <div className="sidebar">
+        <motion.div className="sidebar" initial={{x:-100}} animate={{x:0}} transition={{duration:0.25}}>
             <div className="sidebarWrapper">
             <ul className="sidebarList">
                 <li className="sidebarListItem">
                     <RssFeed className="sidebarIcon"/>
-                    <span className="sidebarListItemText">
-                     Feed
+                    <Link to ="/pages" >
+                    <span className="sidebarListItemText" style={{textDecoration:'none'}}>
+                     Pages
                     </span>
+                    </Link>
                 </li>
                 <li className="sidebarListItem">
                     <VideoLibrary className="sidebarIcon"/>
@@ -76,6 +79,6 @@ useEffect(()=>{
 
                 
             </div>
-        </div>
+        </motion.div>
     )
 }

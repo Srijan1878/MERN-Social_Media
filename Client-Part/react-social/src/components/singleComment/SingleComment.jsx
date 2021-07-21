@@ -5,7 +5,7 @@ import axios from 'axios';
 import { AuthContext } from '../../context/AuthContext';
 import Reply from '../reply/Reply';
 
-export const SingleComment = ({singleComment,post}) => {
+export const SingleComment = ({singleComment,post,fetchComments}) => {
     const [showReply, setShowReply] = useState();
     const [replyText, setReplyText] = useState();
     const {user:currentUser} = useContext(AuthContext);
@@ -19,8 +19,8 @@ export const SingleComment = ({singleComment,post}) => {
         }
         catch(err){
             console.log(err)
-        }  
-        window.location.reload()
+        } 
+        fetchComments() 
 }
 const commentStarCounter = async() => {
   try{

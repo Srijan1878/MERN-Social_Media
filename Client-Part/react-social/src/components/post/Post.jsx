@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { v4 as uuidv4 } from 'uuid';
 import { SingleComment } from "../singleComment/SingleComment";
+import { motion } from "framer-motion";
 export default function Post({ post }) {
   const { user: currentUser } = useContext(AuthContext);
   const [like, setLike] = useState(post.likes.length);
@@ -96,7 +97,7 @@ useEffect(() =>{
 
 
   return (
-    <div className="post">
+    <motion.div className="post" initial={{opacity:0,skew:'2deg'}} animate={{opacity:1,skew:'0deg'}} transition={{duration:0.5,staggerChildren:0.25}} >
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopLeft">
@@ -156,11 +157,11 @@ useEffect(() =>{
         {showComments && (
           <div className="comments">
             {comments.map((singleComment) => (
-              <SingleComment singleComment = {singleComment} post={post} key={singleComment.id}/>
+              <SingleComment singleComment = {singleComment} post={post} key={singleComment.id} fetchComments={fetchComments}/>
             ))}
           </div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }

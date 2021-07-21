@@ -4,7 +4,7 @@ import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import {Messenger} from "./pages/messenger/Messenger";
 import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
-
+import Page from './pages/page/Page'
 import {
   BrowserRouter as Router,
   Switch,
@@ -33,6 +33,9 @@ function App() {
           </Route>
           <Route path="/reset-password">
             <ForgotPassword />
+          </Route>
+          <Route path="/pages">
+            <Page />
           </Route>
     </Switch>
   </Router>
