@@ -87,6 +87,13 @@ p.delete:after{  transform-origin:  0% 50%; }
 .postBottom{
     display: flex;
     justify-content: space-between;
+    position: relative;
+}
+.postBottomRight{
+    display: flex;
+    justify-content: flex-end;
+    position: absolute;
+    right: 10px;
 }
 .postCommentText{
     cursor: pointer;

@@ -1,0 +1,132 @@
+.bodyContainer{
+    width: 100%;
+}
+.bodyContent{
+    display: flex;
+}
+.pageCreationForm{
+    display: flex;
+    flex-direction: column;
+    margin-left: 80px;
+}
+.MembersContainer{
+    margin-left: 80px;
+}
+.membersWrapper{
+    display: flex;
+    overflow-x: scroll;
+    max-width: 650px;
+}
+.singleMember{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left:5px ;
+    margin-right:5px ;
+    
+
+}
+
+.memberImg{
+    width: 80px;
+    height: 80px;
+   object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #5b54fa;
+    padding: 2px;
+    box-shadow: 0px 2px 20px 3px rgba(118,104,104,0.37);
+-webkit-box-shadow: 0px 2px 20px 3px rgba(118,104,104,0.37);
+-moz-box-shadow: 0px 2px 20px 3px rgba(118,104,104,0.37);
+}
+.pageCreateContainer{
+    display: flex;
+    flex-direction: column;
+}
+.title,.desc{
+    width: 550px;
+    border-radius: 12px;
+    background-color: #b2b3da;
+    border: 1.5px solid #b2b3da;
+    color: black;
+    font-size: 20px;
+}
+.desc{
+    resize:none;
+    outline:none;
+    padding: 6px;
+}
+.desc:focus{
+    padding: 6px;
+    outline:none;
+    border: none;
+}
+.desc::placeholder{
+    padding-top: -80px;
+}
+::placeholder{
+    color: black;
+    font-size: 18px;
+    letter-spacing: 2px;
+}
+.btnContainer{
+    display: flex;
+    justify-content: flex-end
+}
+.CreateBtn{
+    height: 30px;
+    padding: 5px;
+    width: 100px;
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family:poppins,'san-serif';
+    font-weight: 300;
+}
+.titleText{
+     font-size: 60px;
+    color: black;
+    font-family: poppins,'san-serif';
+}
+.pageText{
+    font-size: 60px;
+    font-family: poppins,'san-serif';
+}
+.titleTextContainer{
+    display: flex;
+    justify-content: center;
+}
+.BrandTitle{
+    font-family: poppins,'san-serif';
+    color: #5b54fa;
+    margin-left:6px ;
+    margin-right:6px ;
+    font-size: 60px;
+    text-shadow: rgb(255, 255, 255) 0px 0px 5px;
+    -webkit-text-stroke: 0.25px;
+    -webkit-text-fill-color: white;
+}
+.illustrationSVG{
+    margin-top: 20px;
+    height: 500px;
+    width: 700px;
+    margin-left: -100px;
+}
+#BoyHand{
+animation: SVG_ANIMATION 2s infinite linear;
+}
+
+@keyframes SVG_ANIMATION{
+    0%{
+        transform: scale(0.2);
+    }
+    100%{
+        transform: scale(1.0);
+    }
+}
+.btnAdd{
+    font-size: 16px;
+    padding: 2.5px;
+    border: 1px solid #5b54fa;
+    border-radius: 2px;
+}

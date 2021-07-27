@@ -9,16 +9,16 @@ import './profile.css'
 import Update from '../update/Update'
 import { AuthContext } from '../../context/AuthContext'
 import { Cancel } from '@material-ui/icons'
-
+import MonochromePhotosIcon from '@material-ui/icons/MonochromePhotos';
+import { storage } from '../../firebsae'
 
 export default function Profile() {
     const [user,setUser] = useState({})
-    const [showUpdate,setShowUpdate] = useState(true)
     const [showUpdateModal,setShowUpdateModal] = useState(false)
     const username=useParams().username
    const {user:currentUser} = useContext(AuthContext)
    const [showProfilePicture,setShowProfilePicture] = useState(false)
-   const [newProfilePicture,setNewProfilePicture] = useState()
+   const [newProfilePictureSelected,setNewProfilePictureSelected] = useState(false)
    
     useEffect(()=>{
         const fetchUsers=async()=>{
@@ -29,6 +29,7 @@ export default function Profile() {
         fetchUsers();
     },[username])
     const PF=process.env.REACT_APP_PUBLIC_FOLDER;
+    console.log(user)
    /* const newProfilePicSubmitHandler = async(e)=>{
             e.preventDefault();
             try {
@@ -38,17 +39,38 @@ export default function Profile() {
             } catch (err) {
                 console.log(err)
             }
-          }; */   
+          }; */  
+          const newProfilePicUploadHandler = () =>{
+            const uploadTask = storage.ref(`images/${newProfilePictureSelected.name}`).put(newProfilePictureSelected)
+            uploadTask.on(`state_changed`, (snapshot) => {
+                console.log(snapshot.bytesTransferred)
+            },
+            error =>{
+                console.log(error)
+            },
+            () => {
+                storage
+                .ref("images")
+                .child(newProfilePictureSelected.name)
+                .getDownloadURL()
+                .then(url=>{
+                     axios.put('/users/'+user._id,{
+                        profilePicture:url
+                },{headers:{"auth-token":sessionStorage.getItem('token')}})
+            }
+            )}
+            )
+          } 
     return (
         <>
-         <Topbar/>
+         <Topbar />
             <div className="profile">
             <Sidebar/>
             <div className="profileRight" >   
             <div className="profileRightTop"> 
             <div className="profileCover">
             <img 
-            src={user.profilePicture?PF+user.profilePicture:PF+"NoProfile.png"}
+            src={user.profilePicture?user.profilePicture:PF+"NoProfile.png"}
             alt="" 
             className="profileUserImg" 
             onClick={()=>{setShowProfilePicture(!showProfilePicture)}}
@@ -60,8 +82,19 @@ export default function Profile() {
             className="profileCoverImg" /> 
 
                 <div className={showProfilePicture?"profilePictureContainer":"hiddenProfilePictureContainer"} >
-                    <img className={showProfilePicture?"profilePictureClicked":"profilePictureNotClicked"} src={user.profilePicture?PF+user.profilePicture:PF+"NoProfile.png"} alt="" />
+                    <img className={showProfilePicture?"profilePictureClicked":"profilePictureNotClicked"} src={newProfilePictureSelected?URL.createObjectURL(newProfilePictureSelected): user.profilePicture?user.profilePicture:"NoProfile.png"} alt="" />
                     <Cancel className={showProfilePicture?"closeLogo":"hiddenCloseLogo"} onClick={()=>{setShowProfilePicture(!showProfilePicture)}}/>
+                    <h5 className={showProfilePicture?"UpdateNewProfilePictureShown":"UpdateNewProfilePictureHidden"}>Have a better Picture? Change it here!</h5>
+                    <label for="uploader">
+                    <MonochromePhotosIcon className={showProfilePicture?"UpdateNewProfilePictureSelectorShown":"UpdateNewProfilePictureSelectorHidden"}/>
+                   <input type="file" name="uploader" className="newProfilePictureUploader" id="uploader" onChange={(e)=>{setNewProfilePictureSelected(e.target.files[0])}} style={{display:"none"}}/>
+                 </label>
+                 {newProfilePictureSelected && (
+                     <>
+                     <button className="CancelBtn" onClick={()=>{setNewProfilePictureSelected(null)}}>Cancel</button>
+                     <button className="UploadBtn" onClick={newProfilePicUploadHandler}>Upload</button>
+                    </>
+                 )}
                 </div>
 
             <div className="profileInfo">

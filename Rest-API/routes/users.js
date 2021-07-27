@@ -112,6 +112,40 @@ router.get("/friends",verify,async(req,res)=>{
     
 })
 
+//get followers and followings
+router.get("/followers/followings/:userId",async(req,res)=>{
+    
+try{
+    let a=[] ;
+    const users = await User({})
+    const user = await User.findById(req.params.userId)
+    const followers= await Promise.all(user.followers.map((followerId)=>{
+        return User.findById(followerId)
+    })
+    )
+    const friends = await Promise.all(user.followings.map((friendId)=>{
+        return User.findById(friendId)
+        })
+    )
+    const result =  [...followers,...friends]
+    a = [...new Set(result.map(m => m.username))];
+    const memberSuggestions = await Promise.all(a.map((memberName)=>{
+        return User.find({username:memberName})
+        })
+    )
+    
+    res.status(200).json(memberSuggestions)
+    
+    
+        
+
+      
+}catch(err){
+    res.status(500).json(err)
+}
+})
+
+
 //finding user suggestion
 router.get("/suggest/:id",verify,async(req,res)=>{
     try{

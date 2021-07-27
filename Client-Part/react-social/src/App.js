@@ -4,7 +4,7 @@ import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import {Messenger} from "./pages/messenger/Messenger";
 import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
-import Page from './pages/page/Page'
+import CreatePage from './pages/createpage/CreatePage'
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,7 +13,8 @@ import {
 } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext"
-
+import Page from './pages/page/Page'
+import Test from "./Test";
 
 function App() {
   const {user} = useContext(AuthContext)
@@ -31,10 +32,16 @@ function App() {
           <Route path="/profile/:username">
             <Profile />
           </Route>
+          <Route path="/test">
+            <Test />
+          </Route>
           <Route path="/reset-password">
             <ForgotPassword />
           </Route>
-          <Route path="/pages">
+          <Route exact path="/pages">
+            <CreatePage />
+          </Route>
+          <Route path="/pages/get/:title">
             <Page />
           </Route>
     </Switch>

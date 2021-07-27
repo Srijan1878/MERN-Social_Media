@@ -8,6 +8,8 @@ import { AuthContext } from '../../context/AuthContext'
 export default function Feed({username}) {
 const [posts,setPosts] = useState([])
 const {user} = useContext(AuthContext)
+const [newPostUploaded,setNewPostUploaded] = useState(false)
+
 useEffect(()=>{
     const fetchPosts=async()=>{
         const res = username?await axios.get("/posts/profile/"+username,{headers:{"auth-token":sessionStorage.getItem("token")}})
@@ -18,14 +20,15 @@ useEffect(()=>{
         )
     } 
     fetchPosts()
-},[username,user._id])
+},[username,user._id,newPostUploaded],)
+ 
 
      return (
        <div className="feed">
            <div className="feedWrapper">
-        {(!username||username===user.username) && <Share/>}
+        {(!username||username===user.username) && <Share newPostUploaded={newPostUploaded} setNewPostUploaded={setNewPostUploaded}/>}
            {posts.map((p)=>(
-               <Post key={p._id} post={p}/>
+               <Post key={p._id} post={p} setNewPostUploaded={setNewPostUploaded} newPostUploaded={newPostUploaded} />
            ))}           
            </div>
         </div>

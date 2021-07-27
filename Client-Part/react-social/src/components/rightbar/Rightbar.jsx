@@ -22,6 +22,7 @@ export default function Rightbar({ user }) {
     const getFriends = async () => {
       try {
         const friendList = await axios.get("/users/friends/" + user?._id,{headers:{"auth-token":sessionStorage.getItem("token")}});
+        console.log(friendList.data)
         setFriends(friendList.data);
       } catch (err) {
         console.log(err);
@@ -113,8 +114,8 @@ export default function Rightbar({ user }) {
                 <img
                   src={
                     user.profilePicture
-                      ? PF + friend.profilePicture
-                      : PF + "noProfile.png"
+                      ? friend.profilePicture
+                      : PF + "NoProfile.png"
                   }
                   alt=""
                   className="rightbarFollowingImg"

@@ -12,7 +12,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { v4 as uuidv4 } from 'uuid';
 import { SingleComment } from "../singleComment/SingleComment";
 import { motion } from "framer-motion";
-export default function Post({ post }) {
+export default function Post({ post,setNewPostUploaded,newPostUploaded }) {
   const { user: currentUser } = useContext(AuthContext);
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(post.likes.includes(currentUser?._id));
@@ -55,10 +55,11 @@ export default function Post({ post }) {
 const deletePost = async()=>{
 try{
 await axios.delete('/posts/'+post._id, {headers:{"auth-token":sessionStorage.getItem("token")}},{ data: { userId: currentUser._id } });
-window.location.reload()
+setNewPostUploaded(!newPostUploaded)
 }catch(err){
 console.log(err)
 }
+
 }
 
 //Fetching comments 
@@ -106,7 +107,7 @@ useEffect(() =>{
               <img
                 src={
                   users.profilePicture
-                    ? PF + users.profilePicture
+                    ?users.profilePicture
                     : PF + "NoProfile.png"
                 }
                 alt=""
@@ -125,17 +126,18 @@ useEffect(() =>{
         </div>
         <div className="postCenter">
           <span className="postText">{post?.desc}</span>
-          <img src={PF + post.img} alt="" className="postImg" />
+          <img src={post.img} alt="" className="postImg" />
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">
             {isLiked?(<StarIcon className="star" onClick={likeCounter} style={{color:'#F1C40F',transform:"scale(1.3)"}} />):(<StarBorder className="star"  onClick={likeCounter} style={{color:'#F1C40F',transform:"scale(1.3)"}} />)}
             <span className="postLikeCounter">{like} people starred it</span>
           </div>
-          <div className="postBottomRight"></div>
+          <div className="postBottomRight">
           <span className="postCommentText">
             {post.comments.length} comments
           </span>
+          </div>
         </div>
         <div className="commentInputField">
           <input

@@ -1,0 +1,71 @@
+.postsContainer{
+    display: flex;
+    justify-content: center;
+}
+.pagePostComponent{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 650px;
+    height: 650px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.39); 
+    box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.39);
+}
+.posterProfileImg{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    padding: 2px;
+    border: 1px solid limegreen;
+}
+.postTop{
+    display: flex;
+   align-items: center;
+}
+.posterInfoContainer{
+    display: flex;
+    align-items: center;
+}
+.posterName{
+    font-weight: 400;
+    margin-top: 8px;
+    margin-left: 12px;
+}
+.pagePostImgContainer{
+    display: flex;
+    justify-content: center;
+}
+.pagePostImg{
+    width: 625px;
+    height: 400px;
+}
+.pagePostLikesContainer{
+    width: 650px;
+    justify-content: space-between;
+    display: flex;
+    
+}
+.pageStarsContainer{
+    display: flex;
+    align-items: center;
+}
+.postBottom{
+    display: flex;
+    flex-direction: column;
+}
+.commentCounter{
+    cursor: pointer;
+    color: black;
+    border-bottom: 1px dashed gray;
+    font-size: 15px;
+}
+.pagePostCommentTextInput{
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 620px;
+}

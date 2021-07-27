@@ -2,7 +2,7 @@ const Page = require('../models/page')
 const router = require("express").Router();
 
 //Create a page
-router.post("/", async(req, res) => {
+router.post("/create", async(req, res) => {
     try{
     const newPage = new Page(req.body)
     await newPage.save()
@@ -10,6 +10,27 @@ router.post("/", async(req, res) => {
     }catch(err){
         res.status(500).json(err)
     }
+})
+
+//find pages according to the given query user
+router.get("/find/:adminId", async(req, res) => {
+    try{
+     const userPages = await Page.find({adminId:req.params.adminId})
+    res.status(200).json(userPages)
+    }
+     catch(err){
+        res.status(500).json(err)
+    }
+})
+
+//get a page
+router.get("/get/:title", async(req, res) => {
+try{
+const foundPage = await Page.find({title:req.params.title})
+res.status(200).json(foundPage)
+}catch(err){
+console.log(err)
+}
 })
 
 //Add a member

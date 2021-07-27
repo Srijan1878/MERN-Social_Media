@@ -28,12 +28,37 @@
 .sidebarListItem{
     display: flex;
     align-items: center;
- 
     padding: 10px;
+}
+.sidebarDropdownList{
+    list-style: none;
+    opacity: 1;
+    transition: all 0.5s;
+}
+.ExpandedList{
+    margin: 4px;
+    margin-left: 30px;
+}
+.sidebarListItemWithDropDown{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;  
+    
+}
+.hiddenDropdownList{
+    opacity: 0;
+    position: absolute;
+    transform: translateY(-30px);
+    top: 75px;
+    /*transition: all 0.5s;*/ 
 }
 .sidebarListItem:hover{
 background-color: rgb(221, 209, 209);
+}
 
+.sidebarListItemWithDropDown:hover{
+    background-color: rgb(221, 209, 209);
 }
 .sidebarIcon{
     padding-right:15px;

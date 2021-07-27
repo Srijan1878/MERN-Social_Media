@@ -1,4 +1,3 @@
-
 import "./share.css";
 import {
   PermMedia,
@@ -7,44 +6,64 @@ import {
   EmojiEmotions,
   Cancel,
 } from "@material-ui/icons";
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
-
-export default function Share() {
+import { storage } from "../../firebsae";
+import { CircularProgress } from "@material-ui/core";
+export default function Share({ setNewPostUploaded, newPostUploaded }) {
   const { user } = useContext(AuthContext);
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const desc = useRef();
-  const [file, setFile] = useState(null);
-
-  const submitHandler = async (e) => {
+  const circularBar = useRef();
+  const newImage = useRef();
+  const [image, setImage] = useState(null);
+  const [userData, setUserData] = useState({});
+  const [shareProgress, setShareProgress] = useState(0);
+ 
+  const submitHandler = (e) => {
     e.preventDefault();
-    console.log("helo")
-    console.log(user._id)
-    const newPost = {
-      userId: user?._id,
-      desc: desc.current.value,
-    };
-    if (file) {
-      const data = new FormData();
-      const fileName = file.name;
-      data.append("name", fileName);
-      data.append("file", file);
-      newPost.img = fileName;
-      console.log(newPost);
-      try {
-        await axios.post("/upload",data);
-      } catch (err) {
-          console.log(err)
+    const uploadTask = storage.ref(`posts/${image.name}`).put(image);
+    uploadTask.on(
+      `state_changed`,
+      function progress(snapshot) {
+        const progress = (326.7256*((snapshot.bytesTransferred / snapshot.totalBytes)*100))/100;
+        const offset =  326.7256 - progress;
+        console.log(progress)
+        console.log(offset)
+        circularBar.current.style.strokeDashoffset = offset;
+       if(progress>0) newImage.current.style.opacity="0.65"
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        storage
+          .ref("posts")
+          .child(image.name)
+          .getDownloadURL()
+          .then((url) => {
+            axios.post(
+              "/posts",
+              {
+                userId: user._id,
+                desc: desc.current.value,
+                img: url,
+              },
+              { headers: { "auth-token": sessionStorage.getItem("token") } }
+            );
+            setNewPostUploaded(!newPostUploaded);
+            setImage(null)
+          });
       }
-    }
-    try {
-      await axios.post("/posts",newPost,{headers:{"auth-token":sessionStorage.getItem("token")}});
-      window.location.reload();
-    } catch (err) {
-        console.log(err)
-    }
+    );
   };
+  useEffect(() => {
+    const userData = async () => {
+      const res = await axios.get("/users?userId=" + user._id);
+      setUserData(res.data);
+    };
+    userData();
+  }, [user]);
 
   return (
     <div className="share">
@@ -52,11 +71,7 @@ export default function Share() {
         <div className="shareTop">
           <img
             className="shareProfileImg"
-            src={
-              user.profilePicture
-                ? PF + user.profilePicture
-                : PF + "noProfile.png"
-            }
+            src={userData.profilePicture}
             alt=""
           />
           <input
@@ -66,24 +81,44 @@ export default function Share() {
           />
         </div>
         <hr className="shareHr" />
-        {file && (
+        {image && (
           <div className="shareImgContainer">
-            <img className="shareImg" src={URL.createObjectURL(file)} alt="" />
-            <Cancel className="shareCancelImg" onClick={() => setFile(null)} />
+            <img className="shareImg" ref={newImage} src={URL.createObjectURL(image)} alt="" />
+            <Cancel className="shareCancelImg" onClick={() => setImage(null)} />
+            <svg className="progress-ring" width="120" height="120">
+              <circle
+              ref={circularBar}
+                className="progress-ring__circle"
+                stroke="#5b54fa"
+                strokeWidth="4"
+                strokeDasharray="326.7256 326.7256"
+                strokeDashoffset="326.7256"
+                fill="transparent"
+                r="30"
+                cx="60"
+                cy="60"
+              />
+            </svg>
           </div>
         )}
-        <form className="shareBottom" onSubmit={submitHandler} encType="multipart/form-data">
+        <form
+          className="shareBottom"
+          onSubmit={submitHandler}
+          encType="multipart/form-data"
+        >
           <div className="shareOptions">
             <label htmlFor="file" className="shareOption">
               <PermMedia htmlColor="tomato" className="shareIcon" />
-              <span className="shareOptionText" style={{color:"black"}}>Photo or Video</span>
+              <span className="shareOptionText" style={{ color: "black" }}>
+                Photo or Video
+              </span>
               <input
                 style={{ display: "none" }}
                 type="file"
                 id="file"
                 name="file"
                 accept=".png,.jpeg,.jpg"
-                onChange={(e) => setFile(e.target.files[0])}
+                onChange={(e) => setImage(e.target.files[0])}
               />
             </label>
             <div className="shareOption">

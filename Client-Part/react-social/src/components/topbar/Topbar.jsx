@@ -7,13 +7,16 @@ import { AuthContext } from "../../context/AuthContext";
 import HomeIcon from '@material-ui/icons/Home';
 import PersonIcon from '@material-ui/icons/Person';
 import axios from "axios";
+import { useEffect } from "react";
 export default function Topbar() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user } = useContext(AuthContext);
   const [searchValue, setSearchvalue] = useState();
   const [userDetails, setUserDetails] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [userData,setUserData] = useState({});
   let history = useHistory();
+  
   const fetchSearchUers = (query) => {
     setSearchvalue(query);
     fetch("/users/search", {
@@ -67,6 +70,14 @@ export default function Topbar() {
       console.log(err);
     }
   };
+useEffect(() => {
+  const userData = async() =>{
+    const res = await axios.get("/users?userId="+user._id)
+    setUserData(res.data)
+  }
+  userData()
+},[user])
+
   return (
     <>
       <div className="topbarContainer">
@@ -113,9 +124,7 @@ export default function Topbar() {
           <Link to={`/profile/${user.username}`}>
             <img
               src={
-                user.profilePicture
-                  ? PF + user.profilePicture
-                  : PF + "NoProfile.png"
+                userData.profilePicture
               }
               alt="profile"
               className="topbarImg"
