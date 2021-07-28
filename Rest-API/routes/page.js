@@ -26,7 +26,7 @@ router.get("/find/:adminId", async(req, res) => {
 //get a page
 router.get("/get/:title", async(req, res) => {
 try{
-const foundPage = await Page.find({title:req.params.title})
+const foundPage = await Page.findOne({title:req.params.title})
 res.status(200).json(foundPage)
 }catch(err){
 console.log(err)
@@ -67,5 +67,16 @@ router.put("/remove/members/:id", async(req, res) => {
     }catch(err){
         res.status(500).json(err)
     }
+})
+
+//create a post
+router.post("/posts/create/:id",async(req, res) => {
+try{
+    const page = await Page.findById(req.params.id)
+    await page.updateOne({$push: {post:req.body}})
+    res.status(200).json("Post Created")
+}catch(err){
+    res.status(500).json(err)
+}
 })
 module.exports = router;

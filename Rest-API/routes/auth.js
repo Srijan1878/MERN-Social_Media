@@ -22,17 +22,18 @@ router.post("/register", async (req, res) => {
 })
 router.post("/login", async (req, res) =>{
     try {
-        const user = await User.findOne({ email: req.body.email })
-        !user && res.status(404).json("User not found")
+        const foundUser = await User.findOne({ email: req.body.email })
+        !foundUser && res.status(404).json("User not found")
 
-        const validPassword = await bcrypt.compare(req.body.password, user.password)
+        const validPassword = await bcrypt.compare(req.body.password, foundUser.password)
         !validPassword && res.status(400).json("Wrong password")
         
-        const token = jwt.sign({_id:user._id},'secretkey')
+        const token = jwt.sign({_id:foundUser._id},'secretkey')
         
         
+        const {password,updatedAt,email,profilePicture,coverPicture,city,from,relationship,...user} = foundUser._doc
         res.status(200).json({user,token})
-       
+        
     }
     catch (err) {
         console.log(err)

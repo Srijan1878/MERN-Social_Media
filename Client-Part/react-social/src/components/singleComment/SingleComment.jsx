@@ -16,6 +16,7 @@ export const SingleComment = ({singleComment,post,fetchComments}) => {
            text:replyText,
            username:currentUser.username
        })
+       setReplyText('')
         }
         catch(err){
             console.log(err)

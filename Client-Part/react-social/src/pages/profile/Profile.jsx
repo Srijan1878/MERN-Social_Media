@@ -18,6 +18,7 @@ export default function Profile() {
     const username=useParams().username
    const {user:currentUser} = useContext(AuthContext)
    const [showProfilePicture,setShowProfilePicture] = useState(false)
+   const [onProfilePicUpdate,setOnProfilePicUpdate] = useState(false)
    const [newProfilePictureSelected,setNewProfilePictureSelected] = useState(false)
    
     useEffect(()=>{
@@ -27,19 +28,9 @@ export default function Profile() {
             console.log(user?._id)
     } 
         fetchUsers();
-    },[username])
+    },[username,onProfilePicUpdate])
     const PF=process.env.REACT_APP_PUBLIC_FOLDER;
     console.log(user)
-   /* const newProfilePicSubmitHandler = async(e)=>{
-            e.preventDefault();
-            try {
-              await axios.put("/users/profilePicture/"+currentUser._id,{headers:{"auth-token":sessionStorage.getItem("token")}}, {
-                  profilePicture:newProfilePicture?.name
-              });
-            } catch (err) {
-                console.log(err)
-            }
-          }; */  
           const newProfilePicUploadHandler = () =>{
             const uploadTask = storage.ref(`images/${newProfilePictureSelected.name}`).put(newProfilePictureSelected)
             uploadTask.on(`state_changed`, (snapshot) => {
@@ -57,6 +48,9 @@ export default function Profile() {
                      axios.put('/users/'+user._id,{
                         profilePicture:url
                 },{headers:{"auth-token":sessionStorage.getItem('token')}})
+                setNewProfilePictureSelected(null)
+                setShowProfilePicture(false)
+                setOnProfilePicUpdate(!onProfilePicUpdate)
             }
             )}
             )

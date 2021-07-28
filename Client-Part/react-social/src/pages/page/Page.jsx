@@ -9,7 +9,6 @@ const Page = () => {
     const [pageData,setPageData] = useState([])
     useEffect(async()=>{
     const res = await axios.get("/pages/get/" + pages.title)
-    console.log(res.data)
     setPageData(res?.data)
     },[])
     return (
@@ -25,10 +24,10 @@ const Page = () => {
                 <img className = "pageProfileImg" src="https://images.unsplash.com/photo-1589487391730-58f20eb2c308?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1053&q=80"></img>
                 </div>
                 <div className = "PageInfoContainer" >
-                    <h4 className="pageTitle">{pageData[0]?.title}</h4>
+                    <h4 className="pageTitle">{pageData?.title}</h4>
                 </div>
                 
-               <PagePosts/>
+               <PagePosts pageData={pageData}/>
                 <div className="AddMembersContainer">
                 
                 </div>

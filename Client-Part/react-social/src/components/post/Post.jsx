@@ -135,7 +135,7 @@ useEffect(() =>{
           </div>
           <div className="postBottomRight">
           <span className="postCommentText">
-            {post.comments.length} comments
+            {comments.length} comments
           </span>
           </div>
         </div>

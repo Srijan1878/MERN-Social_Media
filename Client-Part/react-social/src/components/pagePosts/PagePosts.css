@@ -1,16 +1,25 @@
 .postsContainer{
     display: flex;
-    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
+ .pagePostImgContainer{
+     display: flex;
+     flex-direction: column;
+     margin: auto;
+ }
+ .pagePostDescription{
+     max-width: 625px;
+ }
 .pagePostComponent{
-    padding: 10px;
+    margin-bottom: 25px;
+    padding: 12px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 650px;
-    height: 650px;
+    max-width: 650px;
+   /*height: 650px;*/
     background-color: white;
-    border: 1px solid black;
     border-radius: 10px;
     -webkit-box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.39); 
     box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.39);
@@ -39,20 +48,25 @@
 .pagePostImgContainer{
     display: flex;
     justify-content: center;
+    margin-top: 25px;
+    margin-bottom:25px;
 }
 .pagePostImg{
     width: 625px;
     height: 400px;
 }
 .pagePostLikesContainer{
-    width: 650px;
+    width: 630px;
     justify-content: space-between;
     display: flex;
-    
+    margin-bottom: 10px;
 }
 .pageStarsContainer{
     display: flex;
     align-items: center;
+    margin-bottom: 5px;
+    margin-left: 3px;
+  
 }
 .postBottom{
     display: flex;
@@ -61,11 +75,23 @@
 .commentCounter{
     cursor: pointer;
     color: black;
-    border-bottom: 1px dashed gray;
+    border-bottom: 1.2px dashed gray;
+    margin-bottom: 9px;
     font-size: 15px;
 }
 .pagePostCommentTextInput{
     border: 1px solid black;
     border-radius: 10px;
-    width: 620px;
+    width: 600px;
+}
+.showCommentsButton{
+    width: 150px;
+    height: 30px;
+    border: none;
+}
+.commentContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-content: space-evenly;
 }
