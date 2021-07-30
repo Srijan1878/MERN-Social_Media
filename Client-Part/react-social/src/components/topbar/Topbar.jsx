@@ -8,6 +8,9 @@ import HomeIcon from '@material-ui/icons/Home';
 import PersonIcon from '@material-ui/icons/Person';
 import axios from "axios";
 import { useEffect } from "react";
+import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+
 export default function Topbar() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user } = useContext(AuthContext);
@@ -33,7 +36,7 @@ export default function Topbar() {
         setUserDetails(results.user);
       });
   };
-  const clickHandler = () => {
+  const logoutHandler = () => {
     sessionStorage.clear();
     history.push("/");
     window.location.reload();
@@ -130,19 +133,12 @@ useEffect(() => {
               className="topbarImg"
             />
           </Link>
+          
           </span>
-          <span className="topbarLink">
-          <span
-            onMouseOver={() => {
-              setShowDropdown(true);
-            }}
-            onMouseLeave={() => {
-              setShowDropdown(false);
-            }}
-          >
-            
-          </span>
-          </span>
+          <div className="SettingsIconContainer">
+          <ExitToAppIcon className="settingsIcon" onClick={logoutHandler}/>
+          </div>
+          
           </div>
           
           {/* {showDropdown && (

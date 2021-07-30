@@ -1,17 +1,25 @@
 import './login.css'
-import {useContext, useRef} from 'react'
+import {useContext, useRef, useState} from 'react'
 import {loginCall} from "../../apiCalls"
 import { AuthContext } from '../../context/AuthContext'
 import { CircularProgress } from '@material-ui/core';
 import {Link} from 'react-router-dom'
 export default function Login() {
     const email =useRef()
+    const [wrongPassword,setWrongPassword] = useState(false)
     const password =useRef()
     const {user, isFetching, error, dispatch} = useContext(AuthContext)
     const handleSubmit = (e) =>{
         e.preventDefault()
-        loginCall({email:email.current.value,password:password.current.value},dispatch)
-    }
+         loginCall({email:email.current.value,password:password.current.value},dispatch).then(()=>{
+        setTimeout(()=>{
+            if(window.location.href.includes('/login')){
+            setWrongPassword(true)
+            }
+        },1000)
+        
+    })
+}
     return (
         <div className="login">
         <div className="loginWrapper">
@@ -33,6 +41,7 @@ export default function Login() {
                     <button id="btn3" className="loginRegistration">Create a new account</button>
                     </Link>
                     </div>
+                    <p className={wrongPassword?"showWrongPassword":"hideWrongPassword"}>Password or Email is wrong</p>
                 </form>
             </div>
         </div>

@@ -93,6 +93,11 @@ export const Messenger = () => {
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+  
+ 
+
+
+
   return (
     <>
       <Topbar />

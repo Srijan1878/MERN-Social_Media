@@ -71,13 +71,14 @@ const io = require("socket.io")(8900, {
     //send and get message
     socket.on("sendMessage", ({ senderId, receiverId, text }) => {
       const user = getUser(receiverId);
-      io.to(user.socketId).emit("getMessage", {
+      io.to(user?.socketId).emit("getMessage", {
         senderId,
         text,
       });
     });
   
-    //when disconnect
+  
+   //when disconnect
     socket.on("disconnect", () => {
       console.log("a user disconnected!");
       removeUser(socket.id);

@@ -7,6 +7,21 @@
   justify-content: center;
   align-items: center;
 }
+.showWrongPassword{
+color: red;
+text-align: center;
+font-weight: 300;
+margin-top: 10px;
+opacity: 1;
+transition: 0.35s all;
+}
+.hideWrongPassword{
+  opacity: 0;
+  color: black;
+text-align: center;
+font-weight: 300;
+margin-top: 10px;
+}
 .loginWrapper {
   height: 70%;
   width: 70%;
@@ -40,6 +55,7 @@
   flex-direction: column;
   height: 300px;
   margin-left: 100px;
+  align-items: center;
 }
 .loginInput {
   margin-bottom: 40px;
