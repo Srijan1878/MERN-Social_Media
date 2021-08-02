@@ -56,6 +56,7 @@ margin-top: 10px;
   height: 300px;
   margin-left: 100px;
   align-items: center;
+  position: relative;
 }
 .loginInput {
   margin-bottom: 40px;
@@ -128,4 +129,16 @@ button {
   background-color: white;
   transition: ease-in 0.3s;
   color: #5b54fa;
+}
+.showPassword{
+  position: absolute;
+  top: 102px;
+  left: 365px;
+  cursor: pointer;
+}
+.hidePassword{
+  position: absolute;
+  top: 102px;
+  left: 365px;
+  cursor: pointer;
 }

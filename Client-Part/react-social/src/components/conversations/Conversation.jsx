@@ -28,7 +28,7 @@ return (
     <div className="conversation">
     
       <img
-        src={user?.profilePicture?PF+user.profilePicture:PF+"NoProfile.png"}
+        src={user?.profilePicture?user.profilePicture:PF+"NoProfile.png"}
         alt=""
         className="conversationImg"
       />

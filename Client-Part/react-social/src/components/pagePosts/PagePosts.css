@@ -2,6 +2,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+    margin-top: 10px;
 }
  .pagePostImgContainer{
      display: flex;
@@ -10,6 +11,7 @@
  }
  .pagePostDescription{
      max-width: 625px;
+     margin-bottom: 10px;
  }
 .pagePostComponent{
     margin-bottom: 25px;
@@ -82,7 +84,7 @@
 .pagePostCommentTextInput{
     border: 1px solid black;
     border-radius: 10px;
-    width: 600px;
+    width: 580px;
 }
 .showCommentsButton{
     width: 150px;

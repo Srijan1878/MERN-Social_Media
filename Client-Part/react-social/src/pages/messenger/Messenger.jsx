@@ -115,6 +115,9 @@ export const Messenger = () => {
               </div>
             ))}
           </div>
+          <div className="createGroupContainer">
+            <h4>Create a group</h4>
+          </div>
         </div>
         <div className="chatBox">
           <div className="chatBoxWrapper">

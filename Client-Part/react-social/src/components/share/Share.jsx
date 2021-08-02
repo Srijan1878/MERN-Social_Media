@@ -10,7 +10,6 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import { storage } from "../../firebsae";
-import { CircularProgress } from "@material-ui/core";
 export default function Share({ setNewPostUploaded, newPostUploaded }) {
   const { user } = useContext(AuthContext);
   const desc = useRef();
@@ -18,7 +17,8 @@ export default function Share({ setNewPostUploaded, newPostUploaded }) {
   const newImage = useRef();
   const [image, setImage] = useState(null);
   const [userData, setUserData] = useState({});
-  const [shareProgress, setShareProgress] = useState(0);
+  const [userLocationAvailable, setUserLocationAvailable] = useState(false);
+  const [postUserLocation, setPostUserLocation] = useState();
  
   const submitHandler = (e) => {
     e.preventDefault();
@@ -47,12 +47,15 @@ export default function Share({ setNewPostUploaded, newPostUploaded }) {
               {
                 userId: user._id,
                 desc: desc.current.value,
+                location: postUserLocation,
                 img: url,
               },
               { headers: { "auth-token": sessionStorage.getItem("token") } }
             );
             setNewPostUploaded(!newPostUploaded);
             setImage(null)
+            setPostUserLocation(null)
+            desc.current.value = '';
           });
       }
     );
@@ -64,7 +67,23 @@ export default function Share({ setNewPostUploaded, newPostUploaded }) {
     };
     userData();
   }, [user]);
-
+  
+  const getLocationHandler =  () => {
+    if ("geolocation" in navigator) {
+      setUserLocationAvailable(true)
+    } else {
+      setUserLocationAvailable(false)
+    }
+    if(setUserLocationAvailable){
+      navigator.geolocation.getCurrentPosition(async function(position) {
+  
+        const res =await axios.get (`http://api.positionstack.com/v1/reverse?access_key=8f30204be1e2e15a826c9753c9d4fbdf&query=${position.coords.latitude},${position.coords.longitude}`)
+        setPostUserLocation(res.data.data[0].locality)
+      });
+    }
+    }
+  
+    //data[0].locality
   return (
     <div className="share">
       <div className="shareWrapper">
@@ -79,6 +98,10 @@ export default function Share({ setNewPostUploaded, newPostUploaded }) {
             className="shareInput"
             ref={desc}
           />
+          
+          <h4 className="postDescLocation" style={{opacity:"0.7"}}>{postUserLocation?`-At ${postUserLocation}`:""}</h4>
+          
+          
         </div>
         <hr className="shareHr" />
         {image && (
@@ -126,7 +149,7 @@ export default function Share({ setNewPostUploaded, newPostUploaded }) {
               <span className="shareOptionText">Tag</span>
             </div>
             <div className="shareOption">
-              <Room htmlColor="green" className="shareIcon" />
+              <Room htmlColor="green" className="shareIcon" onClick={getLocationHandler}/>
               <span className="shareOptionText">Location</span>
             </div>
             <div className="shareOption">

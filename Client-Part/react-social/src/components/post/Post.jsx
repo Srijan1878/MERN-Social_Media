@@ -12,13 +12,16 @@ import { AuthContext } from "../../context/AuthContext";
 import { v4 as uuidv4 } from 'uuid';
 import { SingleComment } from "../singleComment/SingleComment";
 import { motion } from "framer-motion";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
+
 export default function Post({ post,setNewPostUploaded,newPostUploaded }) {
   const { user: currentUser } = useContext(AuthContext);
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(post.likes.includes(currentUser?._id));
   const [users, setUsers] = useState({});
   const [comments,setComments] = useState([]);
-  //const [commentTexts,setCommentTexts] = useState([])
+
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const [showComments, setShowComments] = useState(false);
@@ -29,7 +32,7 @@ export default function Post({ post,setNewPostUploaded,newPostUploaded }) {
         "auth-token":sessionStorage.getItem("token")
       }});
       setUsers(res.data);
-    /*console.log(res.data)*/
+
     };
     fetchUsers();
   }, [post.userId]);
@@ -100,7 +103,7 @@ useEffect(() =>{
   return (
     <motion.div className="post" initial={{opacity:0,skew:'2deg'}} animate={{opacity:1,skew:'0deg'}} transition={{duration:0.5,staggerChildren:0.25}} >
       <div className="postWrapper">
-        <div className="postTop">
+        <div className="postTop" >
           <div className="postTopLeft">
             <Link to={`profile/${users.username}`}>
               {" "}
@@ -126,7 +129,8 @@ useEffect(() =>{
         </div>
         <div className="postCenter">
           <span className="postText">{post?.desc}</span>
-          <img src={post.img} alt="" className="postImg" />
+          {post.location?<p className="postLocation" style={{color:"black,opacity:0.7"}}>{`-At ${post?.location}`}</p>:''}
+          <LazyLoadImage src={post.img} alt="" className="postImg" effect="blur"/>
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">

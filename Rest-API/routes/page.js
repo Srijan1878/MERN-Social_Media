@@ -38,7 +38,7 @@ router.put("/add/members/:id", async(req, res) => {
     try{
     const page = await Page.findById(req.params.id)  
         if(!page.members.includes(req.body.userId)){
-    await page.updateOne({$push: {members:{$each:req.body.userId}}})
+    await page.updateOne({$push: {members:req.body.userId}})
     res.status(200).json("done")
         }
         else{

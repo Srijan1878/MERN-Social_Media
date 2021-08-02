@@ -29,3 +29,28 @@
     justify-content: center;
     margin-top:90px;
 }
+.MembersContainer{
+    display: flex;
+    width: 1440px;
+    justify-content: center;
+    transform: translate(50,-50%);
+}
+.share2{
+    width: 650px;
+    -webkit-box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.39); 
+    box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.39);
+    border-radius: 12px;
+    
+    padding: 7px;
+    padding-bottom: 18px;
+    
+}
+.shareComponent{
+    display: flex;
+    justify-content: center;
+}
+.membersWrapper{
+    display: flex;
+    overflow-x: scroll;
+    max-width: 635px;
+}

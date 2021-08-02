@@ -7,6 +7,10 @@ const PagePostsSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    posterId:{
+        type: String,
+        required: true
+    },
         desc:{
             type:String,
             max:500

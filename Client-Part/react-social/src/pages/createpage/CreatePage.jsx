@@ -3,28 +3,18 @@ import Topbar from "../../components/topbar/Topbar";
 import "./createpage.css";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
-
+import { Link } from "react-router-dom";
 export default function CreatePage() {
   const {user} = useContext(AuthContext);
-  const [memberSuggestions, setMemberSuggestions] = useState([]);
+  
+  const [currentUserPage,setCurrentUserPage] = useState({});
+  const [redirect,setRedirect] = useState(false);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER
   const [titleAndDesc, setTitleAndDesc] = useState({
     title: "",
     desc: ""
   });
-  useEffect(async() => {
-    const getFriends = async () => {
-      try {
-        const res = await axios.get("/users/followers/followings/"+user._id,{headers:{"auth-token":sessionStorage.getItem("token")}});
-        console.log(res.data)
-        setMemberSuggestions(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-     getFriends()
-  }
-  ,[])
+  
  
   const submitHandler = async(e) =>{
     e.preventDefault()
@@ -33,14 +23,26 @@ export default function CreatePage() {
     title: titleAndDesc.title,
     desc: titleAndDesc.desc,
   })
+  
+  await getPages()
+ setRedirect(true)
   }
+
+  const getPages = async() => {
+  const res = await axios.get("/pages/find/"+user._id)
+  console.log(res.data)
+  const len = res.data.length-1
+  setCurrentUserPage(res.data[len])
+  } 
+
+
 
   return (
     <>
       <Topbar />
       <div className="bodyContainer">
         <div className="titleTextContainer">
-          <h2 className="titleText">Create Your Very Own </h2>
+          <h2 className="titleText">Create a new  </h2>
           <h2 className="BrandTitle">WeShare</h2>
           <h2 className="pageText">page!</h2>
         </div>
@@ -189,40 +191,25 @@ export default function CreatePage() {
           </div>
           <div className="pageCreateContainer">
             <form className="pageCreationForm" onSubmit={submitHandler}>
-              <input type="text" className="title" placeholder="Title" onChange={(e)=>{setTitleAndDesc({...titleAndDesc,title:e.target.value})}} value={titleAndDesc.title} onClick={()=>{console.log(titleAndDesc.title)}}></input>
-              <textarea name="" placeholder="Description" className="desc" cols="20" rows="5"  onChange={(e)=>{setTitleAndDesc({...titleAndDesc,desc:e.target.value})}} value={titleAndDesc.desc} onClick={()=>{console.log(titleAndDesc.desc)}} ></textarea>
+              <input type="text" className="title" placeholder="Title" onChange={(e)=>{setTitleAndDesc({...titleAndDesc,title:e.target.value})}} value={titleAndDesc.title} ></input>
+              <textarea name="" placeholder="Description" className="desc" cols="20" rows="5"  onChange={(e)=>{setTitleAndDesc({...titleAndDesc,desc:e.target.value})}} value={titleAndDesc.desc}  ></textarea>
               <div className="btnContainer">
               <button className="CreateBtn" type="submit" >Proceed</button>
               </div>
               
             </form>
-
-            <div className="MembersContainer">
-              <p
-                style={{
-                  color: "black",
-                  marginTop: "10px",
-                  marginBottom: "10px",
-                }}
-              >                
-                Add Members
-              </p>
-              <div className="membersWrapper">
-                {memberSuggestions?.map(memberSuggestion => memberSuggestion.map(memberSuggestionAttributes=>(
-                   <>                               
-                  <div className="singleMember">                   
-                <img
-                  className="memberImg"
-                  src={ PF + memberSuggestionAttributes.profilePicture}
-                  alt=""
-                />
-                <span style={{ fontWeight: "400" }}>{memberSuggestionAttributes.username}</span>
-                <button className="btnAdd" >Add</button>
-              </div>            
-              </>
-                )))}          
-              </div>
-            </div>
+{
+  redirect && (
+    <div className="redirectContainer">
+      <h4>Page Created!</h4>
+      <div className="pageRedirect">
+        <Link to={`/pages/get/${currentUserPage?.title}`}>
+        <h4>Check it out</h4>
+        </Link>
+      </div>
+      </div>
+  )
+}
           </div>
         </div>
       </div>

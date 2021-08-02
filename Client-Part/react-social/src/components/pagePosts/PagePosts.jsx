@@ -9,12 +9,12 @@ const PagePosts = ({pageData}) => {
               <div className="postTop">
                   <div className="posterInfoContainer">                
               <img className="posterProfileImg" src="https://images.unsplash.com/photo-1627244714766-94dab62ed964?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=701&q=80" alt="" />
-              <span className="posterName">Hello</span>  
+              <span className="posterName">{pagePost.posterId}</span>  
               </div>
             </div>
               <div className="pagePostImgContainer">
                 <h5 className="pagePostDescription" style={{fontSize:"15px",fontWeight:"400"}}>{pagePost.desc}</h5>
-              <img className="pagePostImg" src="https://images.unsplash.com/photo-1627241384307-085049264cc1?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="" />
+              <img className="pagePostImg" src={pagePost.img} alt="" />
               </div>
               <div className="postBottom">
               <div className="pagePostLikesContainer">
@@ -22,7 +22,7 @@ const PagePosts = ({pageData}) => {
                 <StarBorder style={{transform:"scale(1.3)"}}/>
                 <p style={{color:"black",marginLeft:"5px",marginTop:"1px"}}>2 people starred it</p>
                 </div>
-                <p className="commentCounter">3 comments</p>
+                <p className="commentCounter">{`${pagePost.comments.length} comments`}</p>
 
               </div>
               <div className="commentContainer">

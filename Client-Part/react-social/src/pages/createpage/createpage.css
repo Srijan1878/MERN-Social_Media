@@ -12,11 +12,7 @@
 .MembersContainer{
     margin-left: 80px;
 }
-.membersWrapper{
-    display: flex;
-    overflow-x: scroll;
-    max-width: 650px;
-}
+
 .singleMember{
     display: flex;
     flex-direction: column;
@@ -129,4 +125,10 @@ animation: SVG_ANIMATION 2s infinite linear;
     padding: 2.5px;
     border: 1px solid #5b54fa;
     border-radius: 2px;
+}
+.redirectContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
