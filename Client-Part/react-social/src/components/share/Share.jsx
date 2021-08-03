@@ -10,6 +10,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import { storage } from "../../firebsae";
+import MyLocationIcon from '@material-ui/icons/MyLocation';
 export default function Share({ setNewPostUploaded, newPostUploaded }) {
   const { user } = useContext(AuthContext);
   const desc = useRef();
@@ -17,8 +18,11 @@ export default function Share({ setNewPostUploaded, newPostUploaded }) {
   const newImage = useRef();
   const [image, setImage] = useState(null);
   const [userData, setUserData] = useState({});
-  const [userLocationAvailable, setUserLocationAvailable] = useState(false);
+  const [showLocationOptions, setShowLocationOptions] = useState(false);
   const [postUserLocation, setPostUserLocation] = useState();
+  const [customLocationValue, setCustomLocationValue] = useState();
+  const [userLocationAvailable,setUserLocationAvailable] = useState(false);
+  const [finalCustomLocationValue, setFinalCustomLocationValue] = useState('');
  
   const submitHandler = (e) => {
     e.preventDefault();
@@ -47,7 +51,7 @@ export default function Share({ setNewPostUploaded, newPostUploaded }) {
               {
                 userId: user._id,
                 desc: desc.current.value,
-                location: postUserLocation,
+                location: postUserLocation || finalCustomLocationValue,
                 img: url,
               },
               { headers: { "auth-token": sessionStorage.getItem("token") } }
@@ -55,6 +59,9 @@ export default function Share({ setNewPostUploaded, newPostUploaded }) {
             setNewPostUploaded(!newPostUploaded);
             setImage(null)
             setPostUserLocation(null)
+            setFinalCustomLocationValue('')
+            setCustomLocationValue('')
+            setShowLocationOptions(false)
             desc.current.value = '';
           });
       }
@@ -84,6 +91,9 @@ export default function Share({ setNewPostUploaded, newPostUploaded }) {
     }
   
     //data[0].locality
+    const locationAddHandler = () =>{
+      setFinalCustomLocationValue(customLocationValue)
+    }
   return (
     <div className="share">
       <div className="shareWrapper">
@@ -99,7 +109,7 @@ export default function Share({ setNewPostUploaded, newPostUploaded }) {
             ref={desc}
           />
           
-          <h4 className="postDescLocation" style={{opacity:"0.7"}}>{postUserLocation?`-At ${postUserLocation}`:""}</h4>
+          <h4 className="postDescLocation" style={{opacity:"0.7"}}>{postUserLocation?`-At ${postUserLocation}`:customLocationValue?`-At ${finalCustomLocationValue}`:''}</h4>
           
           
         </div>
@@ -149,18 +159,31 @@ export default function Share({ setNewPostUploaded, newPostUploaded }) {
               <span className="shareOptionText">Tag</span>
             </div>
             <div className="shareOption">
-              <Room htmlColor="green" className="shareIcon" onClick={getLocationHandler}/>
+              <Room htmlColor="green" className="shareIcon" onClick={()=>{setShowLocationOptions(!showLocationOptions)}}/>
               <span className="shareOptionText">Location</span>
             </div>
             <div className="shareOption">
               <EmojiEmotions htmlColor="goldenrod" className="shareIcon" />
               <span className="shareOptionText">Feelings</span>
-            </div>
+            </div>            
           </div>
           <button className="shareButton" type="submit">
             Share
           </button>
         </form>
+
+              <div className={showLocationOptions?"locationOptionsModal":"HiddenLocationOptionsModal"}>
+                <div className="LocationItemList" onClick={getLocationHandler}>
+                <MyLocationIcon style={{color:"green",transform:"scale(0.8)"}}/>
+                <h4 style={{fontSize:"13px",opacity:"0.7"}}>Current Location</h4>
+                </div>
+                <div className="CustomLocationEditorContainer">
+                <input type="text" className="CustomLocationEditor" placeholder="Add Location" value={customLocationValue} onChange={(e)=>{setCustomLocationValue(e.target.value)}}/>
+                <hr style={{width:"275px",border:"2px solid #5b54fa"}}/>
+                <button className="addLocationBtn" onClick={locationAddHandler}>Save</button>
+                </div>
+                
+              </div>                    
       </div>
     </div>
   );

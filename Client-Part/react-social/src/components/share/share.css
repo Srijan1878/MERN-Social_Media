@@ -95,3 +95,61 @@ margin-right: 5px;
 cursor: pointer;
     opacity: 0.5;
 }
+.locationOptionsModal{
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    align-items: center;
+    text-transform: uppercase;
+    padding: 4px;
+    transition: all 0.35s;
+    z-index: 51;
+}
+.LocationItemList{
+    display: flex;
+    margin-top: 5px;
+    align-items: center;
+    cursor: pointer;
+}
+.CustomLocationEditorContainer{
+    display: flex;
+    justify-content: center;
+    padding: 0px;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+.CustomLocationEditor{
+    border: none;
+    margin-bottom: 0px;
+    font-size: 17px;
+    width: 275px;
+}
+.CustomLocationEditor::placeholder{
+    font-size: 14px;
+}
+.HiddenLocationOptionsModal{
+    position: absolute;
+    opacity: 0;
+    top: 150px;
+    right: 50%;
+    z-index: -1;
+}
+.addLocationBtn{
+    border: none;
+    padding: 2.5px;
+    border-radius: 0px;
+    margin-top: 2.5px;
+    position: absolute;
+    font-size: 13.5px;
+    right: 2px;
+}
+.addLocationBtn:hover{
+    border: none;
+    padding: 2.5px;
+    border-radius: 0px;
+    margin-top: 2.5px;
+    position: absolute;
+    font-size: 13.5px;
+    right: 2px;
+}
