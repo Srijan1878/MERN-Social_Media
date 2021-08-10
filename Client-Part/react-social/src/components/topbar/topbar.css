@@ -119,6 +119,7 @@ li.dropdownText:hover{
     cursor: pointer;
 }
 .searchInput{
+    align-self: flex-start;
     border: none;
     width: 80%;
     outline: none;

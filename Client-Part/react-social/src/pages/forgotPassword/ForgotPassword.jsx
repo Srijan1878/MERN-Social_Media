@@ -48,7 +48,7 @@ export default function ForgotPassword() {
             </span>
             
           )}
-          <button type="submit">Submit</button>
+          <button type="submit" className="forgotPasswordSubmitBtn">Submit</button>
         </form>
         <svg
           id="fafd2220-3b39-4538-bdd8-5627e33a2e32"

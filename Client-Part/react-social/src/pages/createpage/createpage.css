@@ -59,7 +59,7 @@
 .desc::placeholder{
     padding-top: -80px;
 }
-::placeholder{
+title::placeholder{
     color: black;
     font-size: 18px;
     letter-spacing: 2px;

@@ -1,6 +1,5 @@
 import React, { useContext,useState } from 'react'
 import './closefriend.css'
-import AddSharpIcon from '@material-ui/icons/AddSharp';
 import axios from 'axios';
 import { AuthContext } from '../../context/AuthContext';
 

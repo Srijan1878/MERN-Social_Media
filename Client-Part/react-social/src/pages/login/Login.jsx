@@ -45,8 +45,12 @@ setPasswordShown(false)
             <div className="loginRight">
                 <form className="loginBox" onSubmit={handleSubmit} >           
                     <input type="email" className="loginInput" placeholder="Email" ref={email} />
-                    <input type="password" className="loginInput" placeholder="password"  required ref={password}/>
-                   {!passwordShown?<VisibilityIcon className="showPassword" style={{color:"black"}} onClick={showPasswordHandler}/>:<VisibilityOffIcon  className="hidePassword" style={{color:"black"}} onClick={hidePasswordHandler}/>}
+                   <div className="passwordInputContainer">
+                   <input type="password" className="loginInputPassword" placeholder="password"  required ref={password}/>
+                   {!passwordShown?<VisibilityIcon className="showPassword" style={{color:"black"}} onClick={showPasswordHandler}/>:<VisibilityOffIcon  className="hidePassword" style={{color:"black"}} onClick={hidePasswordHandler}/>}   
+                       </div> 
+                    
+                    
                     <button type="submit" className="loginButton" disabled={isFetching}>{isFetching?<CircularProgress color="white" size="15px"/>:"Log In"}</button>
                     
                     <div className="loginProblemContainer">

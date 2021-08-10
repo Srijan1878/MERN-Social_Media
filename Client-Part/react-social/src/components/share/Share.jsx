@@ -51,7 +51,7 @@ export default function Share({ setNewPostUploaded, newPostUploaded }) {
               {
                 userId: user._id,
                 desc: desc.current.value,
-                location: postUserLocation || finalCustomLocationValue,
+                location:finalCustomLocationValue,
                 img: url,
               },
               { headers: { "auth-token": sessionStorage.getItem("token") } }
@@ -85,7 +85,7 @@ export default function Share({ setNewPostUploaded, newPostUploaded }) {
       navigator.geolocation.getCurrentPosition(async function(position) {
   
         const res =await axios.get (`http://api.positionstack.com/v1/reverse?access_key=8f30204be1e2e15a826c9753c9d4fbdf&query=${position.coords.latitude},${position.coords.longitude}`)
-        setPostUserLocation(res.data.data[0].locality)
+        setFinalCustomLocationValue(res.data.data[0].locality)
       });
     }
     }
@@ -109,8 +109,8 @@ export default function Share({ setNewPostUploaded, newPostUploaded }) {
             ref={desc}
           />
           
-          <h4 className="postDescLocation" style={{opacity:"0.7"}}>{postUserLocation?`-At ${postUserLocation}`:customLocationValue?`-At ${finalCustomLocationValue}`:''}</h4>
-          
+          {/* <h4 className="postDescLocation" style={{opacity:"0.7"}}>{postUserLocation?`-At ${postUserLocation}`:customLocationValue?`-At ${finalCustomLocationValue}`:''}</h4> */}
+          <h4 className="postDescLocation" style={{opacity:"0.7"}}>{finalCustomLocationValue?`-At ${finalCustomLocationValue}`:''}</h4>
           
         </div>
         <hr className="shareHr" />
@@ -179,10 +179,9 @@ export default function Share({ setNewPostUploaded, newPostUploaded }) {
                 </div>
                 <div className="CustomLocationEditorContainer">
                 <input type="text" className="CustomLocationEditor" placeholder="Add Location" value={customLocationValue} onChange={(e)=>{setCustomLocationValue(e.target.value)}}/>
-                <hr style={{width:"275px",border:"2px solid #5b54fa"}}/>
                 <button className="addLocationBtn" onClick={locationAddHandler}>Save</button>
                 </div>
-                
+                <hr style={{width:"150px",marginLeft:"-6%",height:"3.5px",backgroundColor:"#5b54fa"}} />
               </div>                    
       </div>
     </div>

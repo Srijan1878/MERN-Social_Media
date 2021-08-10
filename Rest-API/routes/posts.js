@@ -110,6 +110,7 @@ router.put("/:id",verify,async (req,res)=>{
         res.status(500).json(err)
     }
 })
+
 //delete a post
 router.delete("/:id",verify,async (req,res)=>{
     try{
