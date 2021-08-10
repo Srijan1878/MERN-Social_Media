@@ -176,11 +176,11 @@ useEffect(() => {
                   }}
                 >
                   <img
-                    src={PF + item.profilePicture}
+                    src={item.profilePicture}
                     alt="Dp"
                     className="searchItemProfilePicture"
                   />
-                  <span classname="searchItemUsename">{item.username}</span>
+                  <span className="searchItemUsename">{item.username}</span>
                 </div>
               </Link>
             ))}

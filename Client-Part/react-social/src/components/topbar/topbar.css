@@ -148,7 +148,7 @@ li.dropdownText:hover{
     align-items: center;
     justify-content: space-between;
 }
-.searchModal{
+/* .searchModal{
     position: absolute;
     flex-wrap: wrap;
 background-position: top;
@@ -157,6 +157,15 @@ background-color: white;
 width: 400px;
 -webkit-box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.39); 
 box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.39);
+} */
+.searchModal{
+    position: fixed;
+    opacity: 1;
+    float: center;
+    z-index: 5;
+    margin-left: 25vw;
+    width: 675px;
+    background-color: white;
 }
 .searchListContainer{
     -webkit-box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.39); 
@@ -165,8 +174,8 @@ box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.39);
 }
 .searchItemProfilePicture{
     object-fit: cover;
-    max-width: 30px;
-    max-height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
 }
 .searchComponent{
@@ -177,7 +186,8 @@ box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.39);
     cursor: pointer;
 }
 .searchItemUsename{
-    font-style: 18px;
+    font-size: 18px;
+    margin-left: 8px;
 }
 .settingsIcon{
     vertical-align: center;
