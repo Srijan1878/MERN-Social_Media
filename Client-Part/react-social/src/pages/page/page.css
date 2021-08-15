@@ -54,3 +54,7 @@
     overflow-x: scroll;
     max-width: 635px;
 }
+.pageMembersContainer{
+    flex-basis: 402px;
+    padding-left: 30px;
+}

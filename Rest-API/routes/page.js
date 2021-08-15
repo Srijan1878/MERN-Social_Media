@@ -1,6 +1,6 @@
 const Page = require('../models/page')
 const router = require("express").Router();
-
+const User = require('../models/User')
 //Create a page
 router.post("/create", async(req, res) => {
     try{
@@ -29,6 +29,21 @@ try{
 const foundPage = await Page.findOne({title:req.params.title})
 res.status(200).json(foundPage)
 }catch(err){
+console.log(err)
+}
+})
+
+//get members of a page
+router.get("/get/members/:title", async(req, res) => {
+try{
+const foundPage = await Page.findOne({title:req.params.title})
+const foundPageMembers = await Promise.all(foundPage.members.map((member) => {
+
+return User.findOne({_id:member})
+}))
+res.status(200).json(foundPageMembers)
+}
+catch(err){
 console.log(err)
 }
 })

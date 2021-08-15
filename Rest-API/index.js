@@ -18,8 +18,8 @@ app.use(express.json())
 app.use(helmet())
 app.use(morgan("common"))
 app.use(cors())
-mongoose.connect("mongodb://localhost:27017/SocialDB",{useNewUrlParser:true,useUnifiedTopology:true})
-//mongoose.connect(process.env.MONGO_URI,{useNewUrlParser:true,useUnifiedTopology:true})
+// mongoose.connect("mongodb://localhost:27017/SocialDB",{useNewUrlParser:true,useUnifiedTopology:true})
+mongoose.connect(process.env.MONGO_URI,{useNewUrlParser:true,useUnifiedTopology:true})
 mongoose.set('useCreateIndex', true);
 mongoose.set('useFindAndModify', false);
 app.use("/api/users",userRoute)

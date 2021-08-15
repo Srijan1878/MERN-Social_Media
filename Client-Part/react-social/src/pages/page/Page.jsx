@@ -21,6 +21,7 @@ const Page = () => {
   const [pageData, setPageData] = useState({});
   const [memberSuggestions, setMemberSuggestions] = useState([]);
   const [pagePostImage,setpagePostImage] = useState()
+  const [pageMembers, setPageMembers] = useState([])
   const [newPagePostUploaded,setNewPagePostUploaded] = useState(false)
 
   const desc  = useRef()
@@ -32,7 +33,10 @@ const Page = () => {
     setPageData(res?.data);
     console.log(pageData?.profilePicture)
   }, [newPagePostUploaded]); 
-  
+  useEffect (async() => {
+    const res = await axios.get("/pages/get/members/" + pages.title);
+    setPageMembers(res?.data);
+  },[])
   //Getting suggestions for members
   useEffect(async () => {
     const getFriends = async () => {
@@ -221,8 +225,17 @@ const Page = () => {
             
             
             </div>
-
+            <div className="pageMembersAndPagePostsContainer" style={{display:"flex"}}>
+            <div className="pageMembersContainer" style={{marginRight:"35px"}}>
+              <>
+              <h1>Members</h1>
+              {pageMembers?.map((pageMember) =>(
+                  <h4>{pageMember.username}</h4>
+              ))}
+              </>
+            </div>
             <PagePosts pageData={pageData} />
+            </div>
             <div className="AddMembersContainer"></div>
             <div className="postSectionContaine"></div>
           </div>
